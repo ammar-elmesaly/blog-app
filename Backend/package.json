@@ -1,0 +1,23 @@
+{
+  "name": "blog_api",
+  "version": "1.0.0",
+  "description": "A Basic blog fullstack application",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --watch app.js"
+  },
+  "keywords": [
+    "Blog",
+    "API",
+    "Node"
+  ],
+  "author": "Ammar Elmesaly",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0"
+  }
+}
