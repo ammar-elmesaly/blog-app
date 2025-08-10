@@ -1,0 +1,12 @@
+doctype html
+html
+   head
+      title=name
+   body
+      h1=name
+      p Greeting from #{name}
+      a(href=url) URL
+      if (user)
+         h1 Hi #{user.name}
+      else
+         a(href="/sign_up") Sign Up

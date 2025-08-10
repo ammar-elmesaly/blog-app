@@ -1,0 +1,20 @@
+html {
+  height: 100%;
+  font-family: Verdana, sans-serif;
+  font-size: 18px;
+  background-color: #111;
+  color: white;
+}
+
+main {
+  text-align: center;
+}
+
+.number {
+  font-size: 180px;
+}
+
+.message {
+  font-style: italic;
+  margin-bottom: 20px;
+}

@@ -15,11 +15,8 @@ html {
   width: 100%;
 }
 
-.navbar li {
-  float: left;
-}
-
 .navbar a {
+  float: left;
   display: block;
   color: white;
   text-align: center;

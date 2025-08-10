@@ -16,8 +16,12 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^2.2.0",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "mongodb": "^6.18.0",
+    "mongoose": "^8.17.1",
+    "pug": "^3.0.3"
   }
 }
