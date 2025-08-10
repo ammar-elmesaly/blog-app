@@ -1,0 +1,32 @@
+.navbar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.active-navitem {
+  background-color: #0066ff;
+}
+
+.active-navitem:hover {
+  background-color: #0257d6 !important;
+}
+
+.navbar a:hover {
+  background-color: #111;
+}
