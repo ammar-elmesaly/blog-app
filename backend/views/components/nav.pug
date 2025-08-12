@@ -1,4 +1,5 @@
 nav.navbar
-  a.active-navitem(href="/") Home
-  a(href="/about") About
-  a(href="/login") Login
+  a(class={ 'active-navitem': currentPage === 'home' }, href="/") Home
+  a(class={ 'active-navitem': currentPage === 'about' }, href="/about") About
+  a(class={ 'active-navitem': currentPage === 'login' }, href="/login") Login
+  a(class={ 'active-navitem': currentPage === 'signup' }, href="/signup") Sign Up

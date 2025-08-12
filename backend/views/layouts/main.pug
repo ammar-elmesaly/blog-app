@@ -3,10 +3,15 @@ html(lang="en")
   head
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title="Blog App"
+
+    block title
+    
     link(href="/public/styles/nav.css", rel="stylesheet")
     link(href="/public/styles/global.css", rel="stylesheet")
+
+    block link_css
   body
     include ../components/nav.pug
-    block content
+    main
+      block content
     include ../components/footer.pug

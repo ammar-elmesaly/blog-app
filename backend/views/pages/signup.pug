@@ -1,7 +1,7 @@
 extends ../layouts/main.pug
 
 block title
-  title="Login"
+  title="Sign Up"
 
 block link_css
   link(href="/public/styles/login.css", rel="stylesheet")
@@ -9,17 +9,17 @@ block link_css
 block content
   if(message)
     h4 #{message}
-  form(action = "/login" method = "POST")
+  form(action = "/signup" method = "POST")
     div.container
-      h2 Login
+      h2 Sign Up
       div.row
-        input(name = "user" type = "text" required placeholder = "Username")
+        input(name = "id" type = "text" required placeholder = "Username")
       
       div.row
         input(name = "password" type = "password" required placeholder = "Password")
       
       div.row
-        input(type = "submit" value="Login")
+        input(type = "submit" value="Sign Up")
       
-      div.signup Don't have an account? 
-        a(href="/signup") Sign Up
+      div.signup Already have an account? 
+        a(href="/login") Login
