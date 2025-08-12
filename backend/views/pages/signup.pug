@@ -13,7 +13,7 @@ block content
     div.container
       h2 Sign Up
       div.row
-        input(name = "id" type = "text" required placeholder = "Username")
+        input(name = "user" type = "text" required placeholder = "Username")
       
       div.row
         input(name = "password" type = "password" required placeholder = "Password")
@@ -26,3 +26,6 @@ block content
       
       div.signup Already have an account? 
         a(href="/login") Login
+      
+      if (error)
+        div.error-message #{error}
