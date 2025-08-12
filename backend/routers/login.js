@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  console.log(req.body)
-  res.send({user: req.body.user, pass: req.body.password});
+  res.render('pages/login', {currentPage: 'login', error: 'Invalid username or password'});
 });
+
 module.exports = router;

@@ -1,3 +1,8 @@
+:root {
+  --button-main-color: #0066ff;
+  --button-main-color-hover: #0257d6;
+}
+
 html {
   font-family: Verdana, sans-serif;
   font-size: 16px;

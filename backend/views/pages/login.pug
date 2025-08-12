@@ -7,8 +7,6 @@ block link_css
   link(href="/public/styles/login.css", rel="stylesheet")
 
 block content
-  if(message)
-    h4 #{message}
   form(action = "/login" method = "POST")
     div.container
       h2 Login
@@ -23,3 +21,6 @@ block content
       
       div.signup Don't have an account? 
         a(href="/signup") Sign Up
+      
+      if (error)
+        div.error-message #{error}

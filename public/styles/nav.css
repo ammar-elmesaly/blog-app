@@ -20,11 +20,11 @@
 }
 
 .active-navitem {
-  background-color: #0066ff;
+  background-color: var(--button-main-color);
 }
 
 .active-navitem:hover {
-  background-color: #0257d6 !important;
+  background-color: var(--button-main-color-hover) !important;
 }
 
 .navbar a:hover {
