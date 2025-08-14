@@ -20,8 +20,6 @@ const PORT = process.env.PORT || 3000;
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URI);
 
-const User = require('./models/users');
-
 // Pug template
 
 app.set('view engine', 'pug');
