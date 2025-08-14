@@ -11,7 +11,11 @@ html(lang="en")
 
     block link_css
   body
-    include ../components/nav.pug
+    if (logged)
+      include ../components/nav-logged.pug
+    else
+      include ../components/nav-unlogged.pug
+
     main
       block content
     include ../components/footer.pug

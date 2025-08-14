@@ -1,32 +1,35 @@
 const express = require('express');
 const router = express.Router();
 const { findUser } = require('../services/userService');
+const { body, validationResult } = require('express-validator');
 
 router.get('/', (req, res) => {
-  res.render('pages/login', {currentPage: 'login'});
+  if (req.isLoggedIn) res.redirect('/protected');
+  else {
+    const err = req.query.error === "2" ? "You are not logged in" : undefined;
+    res.render('pages/login', {currentPage: 'login', error: err});
+  }
 });
 
 router.post('/', validateLogin, (req, res) => {
-  const user = req.user;
-  req.session.user = {
-    _id: user._id,
-    username: user.username
-  };
-  res.redirect('/protected');
+    const user = req.user;
+    req.session.user = {
+      _id: user._id,
+      username: user.username
+    };
+    res.redirect('/protected');
 });
 
 router.use((err, req, res, next) => {
-  res.render('pages/login', {currentPage: 'login', error: err});
+  if (err === "Already logged in") res.redirect('/protected?error=1');
+  else res.render('pages/login', {currentPage: 'login', error: err});
 });
 
 async function validateLogin(req, res, next) {
-  if (req.body.user.length < 3 || req.body.password.length < 6) {
-    return next('Username or password is too short');
-  }
+  if (req.isLoggedIn) return next('Already logged in');
 
   const user = await findUser(req.body.user);
-  if (!user) return next("User is not found");
-  if (req.body.password !== user.password) return next("Wrong password");
+  if (!user || req.body.password !== user.password) return next("Wrong username or password");
 
   req.user = user;
   next();
