@@ -3,21 +3,24 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
+
+// Security related
+
+const helmet = require('helmet');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const MongoStore = require('connect-mongo');
+const https = require('https');
+const fs = require('fs');
+
+const allRouters = require('./routes');
 
 const PORT = process.env.PORT || 3000;
-
-const loginRouter = require('./routers/login');
-const logoutRouter = require('./routers/logout');
-const signupRouter = require('./routers/signup');
-const protectedRouter = require('./routers/protected');
 
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URI);
 
-const User = require('./models/User');
+const User = require('./models/users');
 
 // Pug template
 
@@ -25,9 +28,18 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(cookieParser());
-app.use('/public', express.static(path.join(__dirname, '../public')));
+app.use('/public', express.static(path.join(__dirname, './public')));
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(helmet());
 
+app.disable("x-powered-by");  // Disable x-powered-by header for better security and saving bandwidth
+
+// Set https
+
+const httpsOptions = {
+  key: fs.readFileSync('./certs/server.key'),
+  cert: fs.readFileSync('./certs/server.cert')
+};
 
 // Session settings
 
@@ -40,7 +52,9 @@ app.use(session({
     collectionName: 'sessions'
   }),
   cookie: {
-    expires: false
+    secure: true,
+    expires: false,
+    httpOnly: true
   }
 }));
 
@@ -61,18 +75,19 @@ app.get('/home', (req, res) => {
   res.redirect(301, '/');
 });
 
-app.use('/login', loginRouter);
-
-app.use('/logout', logoutRouter);
-
-app.use('/signup', signupRouter);
-
-app.use('/protected', protectedRouter);
+app.use(allRouters);
 
 app.get('/{*any}', (req, res) => {  // This must be the last router. don't add any routers below it
-  res.sendFile(path.join(__dirname, '../public/pages/404.html'));
+  res.render('pages/404.pug');
 });
 
+
+/*
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
+});
+*/
+
+https.createServer(httpsOptions, app).listen(PORT, () => {
+  console.log(`HTTPS Server running on port ${PORT}`);
 });

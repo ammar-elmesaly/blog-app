@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const User = require('../models/users');
 
 function addUser(username, password) {
   return User.create({ username, password });
