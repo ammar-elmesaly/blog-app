@@ -11,7 +11,7 @@ router.use((err, req, res, next) => {
 });
 
 function validateLogin(req, res, next) {
-  if (req.isLoggedIn) {
+  if (req.session && req.session.user) {
     next();
   } else {
     return next("You are not logged in.")

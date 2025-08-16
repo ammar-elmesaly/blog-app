@@ -5,7 +5,7 @@ const { getUsers, addUser, findUser } = require('../services/userService');
 const { body, validationResult } = require('express-validator');
 
 router.post('/',
-  body('user')
+  body('username')
     .matches(/^[a-zA-Z0-9_]{3,20}$/)
     .withMessage('Username must be 3–20 characters and only contain letters, numbers, and underscores'),
   
@@ -21,7 +21,7 @@ router.post('/',
       return res.render('pages/signup', {currentPage: 'signup', error: errors.array()[0].msg});
     }
     
-    await addUser(req.body.user, req.body.password);
+    const user = await addUser(req.body.username, req.body.password);
     req.session.user = {
       _id: user._id,
       username: user.username
@@ -30,7 +30,7 @@ router.post('/',
 });
 
 router.get('/', (req, res) => {
-  if (req.isLoggedIn) res.redirect('/');
+  if (req.session && req.session.user) res.redirect('/');
   else res.render('pages/signup', {currentPage: 'signup'});
 });
 
@@ -41,12 +41,12 @@ router.get('/get', async (req, res) => {
 
 async function validateSignup(req, res, next) {
 
-  if (req.isLoggedIn) return next("Already logged in");
+  if (req.session && req.session.user) return next("Already logged in");
 
-  const user = await findUser(req.body.user);
+  const user = await findUser(req.body.username);
   if (user) next("Username already exists, please choose another one");
   
-  if (req.body.user.length < 3 || req.body.password.length < 6) {
+  if (req.body.username.length < 3 || req.body.password.length < 6) {
     return next("Username or password is too short");
   }
 
