@@ -4,7 +4,7 @@ const { findUser } = require('../services/userService');
 const { body, validationResult } = require('express-validator');
 
 router.get('/', (req, res) => {
-  if (req.isLoggedIn) res.redirect('/protected');
+  if (req.isLoggedIn) res.redirect('/');
   else {
     const err = req.query.error === "2" ? "You are not logged in" : undefined;
     res.render('pages/login', {currentPage: 'login', error: err});
@@ -17,11 +17,11 @@ router.post('/', validateLogin, (req, res) => {
       _id: user._id,
       username: user.username
     };
-    res.redirect('/protected');
+    res.redirect('/');
 });
 
 router.use((err, req, res, next) => {
-  if (err === "Already logged in") res.redirect('/protected?error=1');
+  if (err === "Already logged in") res.redirect('/?error=1');
   else res.render('pages/login', {currentPage: 'login', error: err});
 });
 

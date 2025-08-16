@@ -4,11 +4,11 @@ const router = express.Router();
 const loginRouter = require('./routes/login');
 const logoutRouter = require('./routes/logout');
 const signupRouter = require('./routes/signup');
-const protectedRouter = require('./routes/protected');
+const homeRouter = require('./routes/home');
 
 router.use('/login', loginRouter);
 router.use('/logout', logoutRouter);
 router.use('/signup', signupRouter);
-router.use('/protected', protectedRouter);
+router.use('/', homeRouter);
 
 module.exports = router;

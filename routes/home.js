@@ -3,7 +3,7 @@ const router = express.Router();
 
 router.get('/', validateLogin, (req, res) => {
   const err = req.query.error === "1" ? "Already logged in" : undefined;
-  res.render('pages/protected', {currentPage: 'protected', username: req.session.user.username, logged: req.isLoggedIn, error: err});
+  res.render('pages/home', {currentPage: 'home', username: req.session.user.username, logged: req.isLoggedIn, error: err});
 });
 
 router.use((err, req, res, next) => {

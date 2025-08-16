@@ -61,10 +61,6 @@ app.use((req, res, next) => {  // Middleware for getting logged-in status
   next();
 });
 
-app.get('/', (req, res) => {
-  res.render('pages/home.pug', {currentPage: 'home', logged: req.isLoggedIn});
-});
-
 app.get('/about', (req, res) => {
   res.render('pages/about.pug', {currentPage: 'about', logged: req.isLoggedIn});
 });

@@ -1,7 +1,16 @@
 extends ../layouts/main.pug
 
 block title
-  title="Home"
+  title="Main"
+
+block link_css
+  link(href="/public/styles/home.css", rel="stylesheet")
 
 block content
-  div Welcome to my Blog!
+  h1 Hi #{username}!
+  h2 Great Job Loggin-in! 
+  div Wanna Logout? 
+    a(href="/logout") Logout
+
+  if (error)
+    div.error-message #{error}

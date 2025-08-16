@@ -26,11 +26,11 @@ router.post('/',
       _id: user._id,
       username: user.username
     };
-    res.redirect('/protected');
+    res.redirect('/');
 });
 
 router.get('/', (req, res) => {
-  if (req.isLoggedIn) res.redirect('/protected');
+  if (req.isLoggedIn) res.redirect('/');
   else res.render('pages/signup', {currentPage: 'signup'});
 });
 
@@ -57,7 +57,7 @@ async function validateSignup(req, res, next) {
 }
 
 router.use((err, req, res, next) => {
-  if (err === "Already logged in") res.redirect('/protected?error=1');
+  if (err === "Already logged in") res.redirect('/?error=1');
   else res.render('pages/signup', { currentPage: 'signup', error: err });
 });
 
