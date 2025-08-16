@@ -45,10 +45,6 @@ async function validateSignup(req, res, next) {
 
   const user = await findUser(req.body.username);
   if (user) next("Username already exists, please choose another one");
-  
-  if (req.body.username.length < 3 || req.body.password.length < 6) {
-    return next("Username or password is too short");
-  }
 
   if (req.body.password !== req.body.repeat_password) {
     return next("Passwords don't match");

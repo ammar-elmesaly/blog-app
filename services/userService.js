@@ -1,7 +1,9 @@
 const User = require('../models/users');
+const { hash } = require('../services/hashService');
 
-function addUser(username, password) {
-  return User.create({ username, password });
+async function addUser(username, password) {
+  const hashed = await hash(password);
+  return User.create({ username, password: hashed });
 }
 
 function getUsers() {
@@ -11,6 +13,10 @@ function getUsers() {
 function findUser(username) {
   return User.findOne({username});
 }
+
+// function deleteAllUsers() {
+//   return User.deleteMany();
+// }
 
 module.exports = {
   addUser,

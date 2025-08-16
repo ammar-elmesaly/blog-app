@@ -40,7 +40,7 @@ function middlewares(app) {
     }
   }));
 
-  app.use((req, res, next) => {  // Middleware for getting logged-in status
+  app.use(async (req, res, next) => {  // Middleware for getting logged-in status
     req.isLoggedIn = req.session.user ? true : false;
     next();
   });
