@@ -1,0 +1,11 @@
+// Navbar if user is logged in
+
+nav.navbar
+  .nav-left
+    a(class={ 'active-navitem': currentPage === 'home' }, href="/") Home
+    a(class={ 'active-navitem': currentPage === 'write' }, href="/posts/new") Write
+
+  .nav-right
+    a(class={ 'active-navitem': currentPage === 'about' }, href="/about") Our Story
+    a.profile-link(href="/profile")
+      img.profile-icon(src="/public/images/default-avatar.png", alt="Profile")

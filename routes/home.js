@@ -7,7 +7,7 @@ router.get('/', validateLogin, (req, res) => {
 });
 
 router.use((err, req, res, next) => {
-  res.redirect('/login?error=2');
+  res.redirect('/login');
 });
 
 function validateLogin(req, res, next) {

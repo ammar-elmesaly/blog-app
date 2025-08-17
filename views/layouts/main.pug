@@ -7,14 +7,15 @@ html(lang="en")
     block title
     
     link(href="/public/styles/nav.css", rel="stylesheet")
+    link(href="/public/styles/nav_private.css", rel="stylesheet")
     link(href="/public/styles/global.css", rel="stylesheet")
 
     block link_css
   body
     if (logged)
-      include ../components/nav-logged.pug
+      include ../components/nav_private.pug
     else
-      include ../components/nav-unlogged.pug
+      include ../components/nav_public.pug
 
     main
       block content

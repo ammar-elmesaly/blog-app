@@ -1,10 +1,23 @@
 extends ../layouts/main.pug
 
 block title
-  title="About Me"
+  title="About"
+
+block link_css
+  link(href="/public/styles/about.css", rel="stylesheet")
 
 block content
-  h1 This is about me
+  h1 Everyone has a story to tell
   p.autobio.
     I am a 2nd year computer science student. Interested in linux,
     low-level languages, low-level computing, and backend.
+  
+  p.autobio.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    Sed nunc lorem, mollis eu feugiat nec, suscipit ac leo.
+    Cras varius purus eu sodales consectetur.
+    Aenean aliquam magna eu turpis elementum tristique.
+    Nullam facilisis orci libero, sit amet mollis nulla sagittis id.
+    Pellentesque a aliquam ante. Mauris vitae sem odio. Sed mi dolor,
+    imperdiet vel malesuada porttitor, aliquam sed diam. In semper posuere nulla vitae interdum.
+    Praesent varius velit at placerat gravida. Morbi interdum mollis volutpat. 

@@ -7,8 +7,7 @@ const { verify } = require('../services/hashService');
 router.get('/', (req, res) => {
   if (req.session && req.session.user) res.redirect('/');
   else {
-    const err = req.query.error === "2" ? "You are not logged in" : undefined;
-    res.render('pages/login', {currentPage: 'login', error: err});
+    res.render('pages/login', {currentPage: 'login'});
   }
 });
 

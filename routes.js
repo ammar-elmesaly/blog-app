@@ -5,10 +5,12 @@ const loginRouter = require('./routes/login');
 const logoutRouter = require('./routes/logout');
 const signupRouter = require('./routes/signup');
 const homeRouter = require('./routes/home');
+const postsRouter = require('./routes/posts');
 
 router.use('/login', loginRouter);
 router.use('/logout', logoutRouter);
 router.use('/signup', signupRouter);
+router.use('/posts', postsRouter);
 router.use('/', homeRouter);
 
 module.exports = router;
