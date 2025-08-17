@@ -1,0 +1,7 @@
+.profile-icon-content {
+  width: 20rem;
+  height: 20rem;
+  border-radius: 50%;
+  object-fit: cover;
+  vertical-align: middle;
+}

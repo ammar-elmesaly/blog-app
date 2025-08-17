@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
+
 const { validateLogin, redirectToLogin } = require('../services/guardRouteService');
 
 router.get('/', validateLogin, (req, res) => {
-  res.render('pages/home', {currentPage: 'home', username: req.session.user.username, logged: true});
+  res.render('pages/profile', {username: req.session.user.username, logged: true});
 });
 
 router.use(redirectToLogin);
+
 
 module.exports = router;

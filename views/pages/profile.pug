@@ -1,0 +1,15 @@
+extends ../layouts/main.pug
+
+block title
+  title="Profile"
+
+block link_css
+  link(href="/public/styles/profile.css", rel="stylesheet")
+
+block content
+  img.profile-icon-content(src="/public/images/default-avatar.png", alt="Profile")
+  h1.name #{username}
+  if(desc)
+    .description #{desc}
+  else
+    .description No description provided. 

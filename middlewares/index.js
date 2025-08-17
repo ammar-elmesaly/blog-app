@@ -17,7 +17,10 @@ function middlewares(app) {
   app.set('views', path.join(__dirname, '../views'));
 
   app.use(cookieParser());
+  
   app.use('/public', express.static(path.join(__dirname, '../public')));
+  app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
   app.use(bodyParser.urlencoded({extended: false}));
   app.use(helmet());
 
