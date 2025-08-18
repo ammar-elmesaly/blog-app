@@ -3,6 +3,7 @@ const router = express.Router();
 
 const { getUsers, addUser, findUser } = require('../services/userService');
 const { body, validationResult } = require('express-validator');
+const { checkUsernameExists, isLoggedIn, validatePasswordRepeat } = require('../middlewares/security');
 
 router.post('/',
   body('username')
@@ -13,7 +14,9 @@ router.post('/',
     .matches(/^(?=.*[A-Z])(?=.*\d).{8,}$/)
     .withMessage('Password must be at least 8 characters, contain one uppercase letter and one number'),
   
-  validateSignup,
+  isLoggedIn,
+  checkUsernameExists,
+  validatePasswordRepeat,
   
   async (req, res) => {
     const errors = validationResult(req);
@@ -35,19 +38,6 @@ router.get('/get', async (req, res) => {
   const response = await getUsers();
   res.send(response);
 });
-
-async function validateSignup(req, res, next) {
-
-  if (req.session && req.session.user) return next("Already logged in");
-
-  const user = await findUser(req.body.username);
-  if (user) next("Username already exists, please choose another one");
-
-  if (req.body.password !== req.body.repeat_password) {
-    return next("Passwords don't match");
-  }
-  next();
-}
 
 router.use((err, req, res, next) => {
   if (err === "Already logged in") res.redirect('/?error=1');

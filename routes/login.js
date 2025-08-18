@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
   }
 });
 
-router.post('/', validateLogin, (req, res) => {
+router.post('/', isLoggedIn, (req, res) => {
     const user = req.user;
     req.session.user = {
       _id: user._id,
@@ -25,7 +25,7 @@ router.use((err, req, res, next) => {
   else res.render('pages/login', {currentPage: 'login', error: err});
 });
 
-async function validateLogin(req, res, next) {
+async function isLoggedIn(req, res, next) {
   if (req.session && req.session.user) return next('Already logged in');
 
   const user = await findUser(req.body.username);

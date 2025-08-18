@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { validateLogin, redirectToLogin } = require('../services/guardRouteService');
+const { isLoggedIn, redirectToLogin } = require('../middlewares/security');
 
-router.get('/', validateLogin, (req, res) => {
+router.get('/', isLoggedIn, (req, res) => {
   res.render('pages/home', {currentPage: 'home', username: req.session.user.username, logged: true});
 });
 

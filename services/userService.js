@@ -14,8 +14,8 @@ function findUser(username) {
   return User.findOne({username});
 }
 
-function updateDesc(id, desc) {
-  return User.findByIdAndUpdate(id, {description: desc}, {new: true});
+function updateUserInfo(id, updates) {
+  return User.findByIdAndUpdate(id, updates, {new: true});
 }
 
 // function deleteAllUsers() {
@@ -26,5 +26,5 @@ module.exports = {
   addUser,
   getUsers,
   findUser,
-  updateDesc
+  updateUserInfo
 }

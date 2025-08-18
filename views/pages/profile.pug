@@ -15,12 +15,16 @@ block content
     else
       .description No description provided.
     
-    form(action="/", method="post")
+    form(action="/profile/update", method="post")
       input.username-input(type="text", name="username", placeholder="Username" required)
       textarea(name="desc", rows="5", cols="50") 
       button(type="submit") Save
       button(class="cancel-editing", type="button") Cancel
+
     button.edit-profile Edit profile
+  
+  if (error)
+    div.error-message #{error}
 
 block scripts
   script(src="/public/scripts/profile.js") 

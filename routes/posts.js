@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { validateLogin, redirectToLogin } = require('../services/guardRouteService');
+const { isLoggedIn, redirectToLogin } = require('../middlewares/security');
 
-router.get('/new', validateLogin, (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
   res.send({hi: 'hi'});
 });
 
