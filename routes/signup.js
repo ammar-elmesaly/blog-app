@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { getUsers, addUser, findUser } = require('../services/userService');
 const { body, validationResult } = require('express-validator');
-const { checkUsernameExists, isLoggedIn, validatePasswordRepeat } = require('../middlewares/security');
+const { checkUsernameExists, mustNotLogIn, validatePasswordRepeat, redirectToHome } = require('../middlewares/security');
 
 router.post('/',
   body('username')
@@ -14,7 +14,7 @@ router.post('/',
     .matches(/^(?=.*[A-Z])(?=.*\d).{8,}$/)
     .withMessage('Password must be at least 8 characters, contain one uppercase letter and one number'),
   
-  isLoggedIn,
+  mustNotLogIn,
   checkUsernameExists,
   validatePasswordRepeat,
   
@@ -39,9 +39,9 @@ router.get('/get', async (req, res) => {
   res.send(response);
 });
 
+router.use(redirectToHome);
 router.use((err, req, res, next) => {
-  if (err === "Already logged in") res.redirect('/?error=1');
-  else res.render('pages/signup', { currentPage: 'signup', error: err });
+  res.render('pages/signup', { currentPage: 'signup', error: err });
 });
 
 module.exports = router;

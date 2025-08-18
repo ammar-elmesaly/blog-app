@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { isLoggedIn, redirectToLogin } = require('../middlewares/security');
+const { mustLogIn, redirectToLogin } = require('../middlewares/security');
 
-router.get('/', isLoggedIn, (req, res) => {
+router.get('/', mustLogIn, (req, res) => {
   res.render('pages/home', {currentPage: 'home', username: req.session.user.username, logged: true});
 });
 

@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const { isLoggedIn, redirectToLogin } = require('../middlewares/security');
+const { mustLogIn, redirectToLogin, checkOtherUsernameExists } = require('../middlewares/security');
 const { validationResult, body } = require('express-validator');
 const { updateUserInfo } = require('../services/userService');
 
-router.get('/', isLoggedIn, (req, res) => {
+router.get('/', mustLogIn, (req, res) => {
+  console.log(req.session.user)
   res.render('pages/profile', {username: req.session.user.username, desc: req.session.user.description, logged: true});
 });
 
@@ -14,7 +15,8 @@ router.post('/update',
     .matches(/^[a-zA-Z0-9_]{3,20}$/)
     .withMessage('Username must be 3–20 characters and only contain letters, numbers, and underscores'),
 
-  isLoggedIn,
+  mustLogIn,
+  checkOtherUsernameExists,
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -27,6 +29,18 @@ router.post('/update',
 
     req.session.user = user;
     res.redirect('/profile');
+});
+
+router.use((err, req, res, next) => {
+  if (err === "Username already exists, please choose another one.")
+    return res.render('pages/profile', {
+      username: req.session.user.username,
+      desc: req.session.user.description,
+      error: err,
+      logged: true
+    });
+
+  next(err);
 });
 
 router.use(redirectToLogin);  // redirects to login on error

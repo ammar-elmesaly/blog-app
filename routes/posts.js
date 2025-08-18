@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { isLoggedIn, redirectToLogin } = require('../middlewares/security');
+const { mustLogIn, redirectToLogin } = require('../middlewares/security');
 
-router.get('/new', isLoggedIn, (req, res) => {
+router.get('/new', mustLogIn, (req, res) => {
   res.send({hi: 'hi'});
 });
 
