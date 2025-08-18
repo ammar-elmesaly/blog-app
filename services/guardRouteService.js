@@ -7,6 +7,7 @@ function validateLogin(req, res, next) {
 }
 
 function redirectToLogin(err, req, res, next) {
+  console.log(err);
   res.redirect('/login');
 }
 

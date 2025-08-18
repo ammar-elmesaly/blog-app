@@ -7,9 +7,20 @@ block link_css
   link(href="/public/styles/profile.css", rel="stylesheet")
 
 block content
-  img.profile-icon-content(src="/public/images/default-avatar.png", alt="Profile")
-  h1.name #{username}
-  if(desc)
-    .description #{desc}
-  else
-    .description No description provided. 
+  .profile-information
+    img.profile-icon-content(src="/public/images/default-avatar.png", alt="Profile")
+    h1.username-main #{username}
+    if(desc)
+      .description #{desc}
+    else
+      .description No description provided.
+    
+    form(action="/", method="post")
+      input.username-input(type="text", name="username", placeholder="Username" required)
+      textarea(name="desc", rows="5", cols="50") 
+      button(type="submit") Save
+      button(class="cancel-editing", type="button") Cancel
+    button.edit-profile Edit profile
+
+block scripts
+  script(src="/public/scripts/profile.js") 

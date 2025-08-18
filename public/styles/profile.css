@@ -1,7 +1,44 @@
+.profile-information {
+  width: 50%;
+}
+
+form {
+  display: none;
+  margin-top: 30px;
+}
+
+.is-editing-profile form {
+  display: block;
+}
+
+.is-editing-profile .username-main, .is-editing-profile .description,
+.is-editing-profile .edit-profile {
+  display: none;
+}
+
+form input, form textarea {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+form textarea {
+  resize: none;
+}
+
 .profile-icon-content {
   width: 20rem;
   height: 20rem;
   border-radius: 50%;
   object-fit: cover;
   vertical-align: middle;
+}
+
+button {
+  border: none;
+  margin-right: 10px;
+}
+
+.edit-profile {
+  margin-top: 20px;
 }

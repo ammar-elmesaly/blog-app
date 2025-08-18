@@ -22,10 +22,7 @@ router.post('/',
     }
     
     const user = await addUser(req.body.username, req.body.password);
-    req.session.user = {
-      _id: user._id,
-      username: user.username
-    };
+    req.session.user = user;
     res.redirect('/');
 });
 

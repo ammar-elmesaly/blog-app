@@ -14,6 +14,10 @@ function findUser(username) {
   return User.findOne({username});
 }
 
+function updateDesc(id, desc) {
+  return User.findByIdAndUpdate(id, {description: desc}, {new: true});
+}
+
 // function deleteAllUsers() {
 //   return User.deleteMany();
 // }
@@ -21,5 +25,6 @@ function findUser(username) {
 module.exports = {
   addUser,
   getUsers,
-  findUser
+  findUser,
+  updateDesc
 }

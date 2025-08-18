@@ -7,7 +7,7 @@ router.get('/', validateLogin, (req, res) => {
   res.render('pages/profile', {username: req.session.user.username, logged: true});
 });
 
-router.use(redirectToLogin);
+router.use(redirectToLogin);  // redirects to login on error
 
 
 module.exports = router;
