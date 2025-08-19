@@ -3,10 +3,9 @@ const router = express.Router();
 
 const { mustLogIn, redirectToLogin, checkOtherUsernameExists } = require('../middlewares/security');
 const { validationResult, body } = require('express-validator');
-const { updateUserInfo } = require('../services/userService');
+const { updateUserInfo, deleteUser } = require('../services/userService');
 
 router.get('/', mustLogIn, (req, res) => {
-  console.log(req.session.user)
   res.render('pages/profile', {username: req.session.user.username, desc: req.session.user.description, logged: true});
 });
 
@@ -29,6 +28,13 @@ router.post('/update',
 
     req.session.user = user;
     res.redirect('/profile');
+});
+
+router.post('/delete', mustLogIn, async (req, res) => {
+  await deleteUser(req.session.user._id);
+  req.session.destroy(() => {
+    res.redirect('/login');
+  });
 });
 
 router.use((err, req, res, next) => {

@@ -18,6 +18,11 @@ function updateUserInfo(id, updates) {
   return User.findByIdAndUpdate(id, updates, {new: true});
 }
 
+function deleteUser(id) {
+  console.log(id);
+  return User.findByIdAndDelete(id);
+}
+
 // function deleteAllUsers() {
 //   return User.deleteMany();
 // }
@@ -26,5 +31,6 @@ module.exports = {
   addUser,
   getUsers,
   findUser,
-  updateUserInfo
+  updateUserInfo,
+  deleteUser
 }

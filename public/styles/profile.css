@@ -7,7 +7,7 @@ form {
   margin-top: 30px;
 }
 
-.is-editing-profile form {
+.is-editing-profile form.edit-profile-form {
   display: block;
 }
 
@@ -16,13 +16,13 @@ form {
   display: none;
 }
 
-form input, form textarea {
+form.edit-profile-form input, form.edit-profile-form textarea {
   display: block;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-form textarea {
+form.edit-profile-form textarea {
   resize: none;
 }
 
@@ -37,15 +37,44 @@ form textarea {
 button {
   border: none;
   margin-right: 10px;
+  padding: 5px;
+  cursor: pointer;
 }
 
-.edit-profile {
+.edit-profile, .delete-profile {
   margin-top: 20px;
 }
 
+/* Deleting Profile CSS */
+
+.delete-profile {
+  display: block;
+  color: var(--button-delete-color);
+  border-radius: 4px;
+  border-color: var(--button-delete-background);
+  transition-duration: 0.1s;
+}
+
+.delete-profile:hover {
+  background-color: var(--button-delete-background);
+  color: white;
+}
+
+.confirm-deleting {
+  background-color: var(--button-delete-background);
+  color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 4px;
+}
+
+.is-deleting-profile form.delete-profile-form {
+  display: block;
+}
+
 .error-message {
-  background-color: rgb(255, 235, 233);
-  color: rgb(204, 0, 0);
+  background-color: var(--error-message-background);
+  color: var(--error-message-color);
   border-radius: 5px;
   margin-top: 20px;
   padding: 10px;

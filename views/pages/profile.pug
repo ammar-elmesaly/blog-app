@@ -15,13 +15,19 @@ block content
     else
       .description No description provided.
     
-    form(action="/profile/update", method="post")
+    form(class="edit-profile-form" action="/profile/update", method="post")
       input.username-input(type="text", name="username", placeholder="Username" required)
       textarea(name="desc", rows="5", cols="50") 
       button(type="submit") Save
       button(class="cancel-editing", type="button") Cancel
 
     button.edit-profile Edit profile
+    button.delete-profile Delete profile
+
+    form(class="delete-profile-form" action="/profile/delete", method="post")
+      h3 Are you sure to delete your profile?
+      button(class="confirm-deleting" type="submit") Yes
+      button(class="cancel-deleting", type="button") Cancel
   
   if (error)
     div.error-message #{error}
