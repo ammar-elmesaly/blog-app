@@ -29,9 +29,8 @@ router.post('/',
     res.redirect('/');
 });
 
-router.get('/', (req, res) => {
-  if (req.session && req.session.user) res.redirect('/');
-  else res.render('pages/signup', {currentPage: 'signup'});
+router.get('/', mustNotLogIn, (req, res) => {
+  res.render('pages/signup', {currentPage: 'signup'});
 });
 
 router.get('/get', async (req, res) => {

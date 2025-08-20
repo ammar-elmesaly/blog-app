@@ -2,13 +2,10 @@ const express = require('express');
 const router = express.Router();
 const { findUser } = require('../services/userService');
 const { body, validationResult } = require('express-validator');
-const { validateLogIn, redirectToHome } = require('../middlewares/security');
+const { validateLogIn, redirectToHome, mustNotLogIn } = require('../middlewares/security');
 
-router.get('/', (req, res) => {
-  if (req.session && req.session.user) res.redirect('/');
-  else {
-    res.render('pages/login', {currentPage: 'login'});
-  }
+router.get('/', mustNotLogIn, (req, res) => {
+  res.render('pages/login', {currentPage: 'login'});
 });
 
 router.post('/', validateLogIn, (req, res) => {

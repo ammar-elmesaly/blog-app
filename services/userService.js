@@ -19,7 +19,6 @@ function updateUserInfo(id, updates) {
 }
 
 function deleteUser(id) {
-  console.log(id);
   return User.findByIdAndDelete(id);
 }
 

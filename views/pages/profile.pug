@@ -8,7 +8,16 @@ block link_css
 
 block content
   .profile-information
-    img.profile-icon-content(src="/public/images/default-avatar.png", alt="Profile")
+    img.profile-icon-content(
+      src= avatarSrc ? avatarSrc : "/public/images/default-avatar.png",
+      alt="Profile"
+    )
+
+    form(class="upload-avatar-form" enctype="multipart/form-data" action="/profile/upload", method="post")
+      input(id="avatar-input" type="file" name="avatar" value="upload" accept="image/png")
+      button(id="avatar-btn" type="button")
+        img(src="/public/images/upload-icon.png", alt="Upload")
+        
     h1.username-main #{username}
     if(desc)
       .description #{desc}

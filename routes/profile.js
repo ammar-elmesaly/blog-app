@@ -1,12 +1,19 @@
 const express = require('express');
 const router = express.Router();
 
+const multer = require('multer');
+const upload = multer({dest: './uploads/avatars'});
 const { mustLogIn, redirectToLogin, checkOtherUsernameExists } = require('../middlewares/security');
 const { validationResult, body } = require('express-validator');
 const { updateUserInfo, deleteUser } = require('../services/userService');
 
 router.get('/', mustLogIn, (req, res) => {
-  res.render('pages/profile', {username: req.session.user.username, desc: req.session.user.description, logged: true});
+  res.render('pages/profile', {
+    username: req.session.user.username,
+    desc: req.session.user.description,
+    logged: true,
+    avatarSrc: req.session.user.avatarSrc
+  });
 });
 
 router.post('/update',
@@ -19,7 +26,12 @@ router.post('/update',
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.render('pages/profile', {username: req.session.user.username, error: errors.array()[0].msg, logged: true});
+      return res.render('pages/profile', {
+        username: req.session.user.username,
+        error: errors.array()[0].msg,
+        logged: true,
+        avatarSrc: req.session.user.avatarSrc
+      });
     }
     const user = await updateUserInfo(req.session.user._id, {
       username: req.body.username,
@@ -35,6 +47,17 @@ router.post('/delete', mustLogIn, async (req, res) => {
   req.session.destroy(() => {
     res.redirect('/login');
   });
+});
+
+router.post('/upload', mustLogIn, upload.single('avatar'), async (req, res, next) => {
+
+  try {
+    const user = await updateUserInfo(req.session.user._id, {avatarSrc: '/' + req.file.path});
+    req.session.user = user;
+    res.redirect('/profile');
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.use((err, req, res, next) => {

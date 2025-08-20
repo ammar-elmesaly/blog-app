@@ -36,3 +36,12 @@ document.querySelector('.delete-profile')
 
 document.querySelector('.cancel-deleting')
   .addEventListener('click', () => renderProfileInfo('is-deleting-profile'))
+
+const avatarInputElement = document.querySelector('#avatar-input');
+
+document.querySelector('#avatar-btn')
+  .addEventListener('click',() => avatarInputElement.click());
+
+avatarInputElement.addEventListener('change', () => {
+  avatarInputElement.closest('form').submit();
+});

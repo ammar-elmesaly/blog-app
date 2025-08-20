@@ -2,7 +2,7 @@
   width: 50%;
 }
 
-form {
+form:not(.upload-avatar-form) {
   display: none;
   margin-top: 30px;
 }
@@ -32,6 +32,7 @@ form.edit-profile-form textarea {
   border-radius: 50%;
   object-fit: cover;
   vertical-align: middle;
+  margin-bottom: 40px;
 }
 
 button {
@@ -71,6 +72,30 @@ button {
 .is-deleting-profile form.delete-profile-form {
   display: block;
 }
+
+/* Upload avatar  CSS */
+
+.upload-avatar-form {
+  margin-top: -100px;
+  margin-left: 260px;
+  margin-bottom: 40px;
+}
+
+.upload-avatar-form #avatar-input {
+  display: none;
+}
+
+.upload-avatar-form #avatar-btn {
+  background-color: var(--upload-avatar-background);
+  border-radius: 50%;
+  padding: 10px;
+}
+
+#avatar-btn img {
+  object-fit: cover;
+  width: 24px;
+}
+
 
 .error-message {
   background-color: var(--error-message-background);
