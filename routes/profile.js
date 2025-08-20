@@ -11,7 +11,6 @@ router.get('/', mustLogIn, (req, res) => {
   res.render('pages/profile', {
     username: req.session.user.username,
     desc: req.session.user.description,
-    logged: true,
     avatarSrc: req.session.user.avatarSrc
   });
 });
@@ -23,30 +22,37 @@ router.post('/update',
 
   mustLogIn,
   checkOtherUsernameExists,
-  async (req, res) => {
+  async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.render('pages/profile', {
         username: req.session.user.username,
         error: errors.array()[0].msg,
-        logged: true,
         avatarSrc: req.session.user.avatarSrc
       });
     }
-    const user = await updateUserInfo(req.session.user._id, {
-      username: req.body.username,
-      description: req.body.desc
-    });
+    try {
+      const user = await updateUserInfo(req.session.user._id, {
+        username: req.body.username,
+        description: req.body.desc
+      });
 
-    req.session.user = user;
-    res.redirect('/profile');
+      req.session.user = user;
+      res.redirect('/profile');
+    } catch (err) {
+      next(err);
+    }
 });
 
-router.post('/delete', mustLogIn, async (req, res) => {
-  await deleteUser(req.session.user._id);
-  req.session.destroy(() => {
-    res.redirect('/login');
-  });
+router.post('/delete', mustLogIn, async (req, res, next) => {
+  try {
+    await deleteUser(req.session.user._id);
+    req.session.destroy(() => {
+      res.redirect('/login');
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.post('/upload', mustLogIn, upload.single('avatar'), async (req, res, next) => {
@@ -66,7 +72,7 @@ router.use((err, req, res, next) => {
       username: req.session.user.username,
       desc: req.session.user.description,
       error: err,
-      logged: true
+      avatarSrc: req.session.user.avatarSrc
     });
 
   next(err);

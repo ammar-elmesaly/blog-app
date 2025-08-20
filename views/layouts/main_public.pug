@@ -1,0 +1,23 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+
+    block title
+    
+    link(href="/public/styles/nav.css", rel="stylesheet")
+    link(href="/public/styles/nav_private.css", rel="stylesheet")
+    link(href="/public/styles/global.css", rel="stylesheet")
+
+    block link_css
+  body
+  
+    include ../components/nav_public.pug
+
+    main
+      block content
+
+    include ../components/footer.pug
+
+    block scripts

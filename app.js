@@ -10,17 +10,11 @@ const allRouters = require('./routes');
 const PORT = process.env.PORT || 3000;
 
 const mongoose = require('mongoose');
+const { mustNotLogIn } = require('./middlewares/security.js');
+
 mongoose.connect(process.env.MONGO_URI);
 
 require('./middlewares/index.js')(app);  // run middlwares
-
-app.get('/about', (req, res) => {
-  res.render('pages/about.pug', {
-    currentPage: 'about',
-    logged: req.isLoggedIn,
-    avatarSrc: req.isLoggedIn ? req.session.user.avatarSrc : undefined
-  });
-});
 
 app.get('/home', (req, res) => {
   res.redirect(301, '/');

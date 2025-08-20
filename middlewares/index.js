@@ -41,11 +41,6 @@ function middlewares(app) {
       expires: false,
     }
   }));
-
-  app.use(async (req, res, next) => {  // Middleware for getting logged-in status
-    req.isLoggedIn = req.session.user ? true : false;
-    next();
-  });
 }
 
 module.exports = middlewares;

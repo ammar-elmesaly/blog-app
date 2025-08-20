@@ -12,11 +12,8 @@ html(lang="en")
 
     block link_css
   body
-    if (logged)
-      include ../components/nav_private.pug
-    else
-      include ../components/nav_public.pug
-
+    include ../components/nav_private.pug
+    
     main
       block content
 

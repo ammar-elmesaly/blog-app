@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+const aboutRouter = require('./routes/about');
 const loginRouter = require('./routes/login');
 const logoutRouter = require('./routes/logout');
 const signupRouter = require('./routes/signup');
@@ -8,6 +9,7 @@ const homeRouter = require('./routes/home');
 const writeRouter = require('./routes/write');
 const profileRouter = require('./routes/profile');
 
+router.use('/about', aboutRouter);
 router.use('/login', loginRouter);
 router.use('/logout', logoutRouter);
 router.use('/signup', signupRouter);
