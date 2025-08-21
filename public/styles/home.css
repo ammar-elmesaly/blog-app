@@ -1,1 +1,60 @@
-/* The birth of my home css */
+body {
+  padding: 20px;
+  background: #f1f1f1;
+}
+
+.post-title {
+  margin-top: 0px;
+}
+
+.content {
+  font-size: 18px;
+}
+
+.post-photo {
+  width:100%;
+  border: 1px solid #a39a9a;
+  border-radius: 6px;
+}
+
+.grid {
+  display: flex;
+  align-items: center;   /* vertically center the image with text */
+  gap: 0.8rem;           /* space between photo and text */
+}
+
+.author-icon {
+  border: 2px solid var(--button-main-color);
+  border-radius: 50%; /* makes it circular */
+  width: 52px;
+  height: 52px;
+  object-fit: cover; /* crop to fit nicely */
+  padding: 3px;
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.username {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.date {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.post {
+  background-color: white;
+  padding: 40px;
+  margin-top: 20px;
+}
+
+.post:after {
+  content: "";
+  display: table;
+  clear: both;
+}

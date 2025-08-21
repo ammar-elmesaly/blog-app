@@ -1,16 +1,29 @@
 extends ../layouts/main_private.pug
 
 block title
-  title="Main"
+  title="Home"
 
 block link_css
   link(href="/public/styles/home.css", rel="stylesheet")
 
 block content
-  h1 Hi #{username}!
-  h2 Great Job Loggin-in! 
-  div Wanna Logout? 
-    a(href="/logout") Logout
+  .posts
+    each post in posts
+      .post
+        h2.post-title #{post.title}
+        .grid
+          img.author-icon(
+            src= post.author.avatarSrc ? post.author.avatarSrc : "/public/images/default-avatar.png",
+            alt="Profile"
+          )
+          .author-info
+            .username #{post.author.username}
+            .date #{post.date}
+        p.content #{post.content}
+        if (post.photoURL)
+          img.post-photo(src=post.photoURL)
+
+
 
   if (error)
     div.error-message #{error}

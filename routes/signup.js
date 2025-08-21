@@ -18,15 +18,20 @@ router.post('/',
   checkUsernameExists,
   validatePasswordRepeat,
   
-  async (req, res) => {
+  async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.render('pages/signup', {currentPage: 'signup', error: errors.array()[0].msg});
     }
     
-    const user = await addUser(req.body.username, req.body.password);
-    req.session.user = user;
-    res.redirect('/');
+    try {
+      const user = await addUser(req.body.username, req.body.password);
+      req.session.user = user;
+      res.redirect('/');
+    } catch (err) {
+      next(err);
+    }
+
 });
 
 router.get('/', mustNotLogIn, (req, res) => {

@@ -1,0 +1,30 @@
+extends ../layouts/main_private.pug
+
+block title
+  title="Write"
+
+block link_css
+  link(href="/public/styles/write.css", rel="stylesheet")
+
+block content
+  .write-container
+    h1 Write a New Post
+    form.write-form(method="post", action="/write/new", enctype="multipart/form-data")
+      .form-group
+        label(for="title") Title
+        input#title(type="text", name="title", placeholder="Enter title", required)
+
+      .form-group
+        label(for="content") Content
+        textarea#content(name="content", rows="10", placeholder="Write your post...", required)
+
+      .form-group
+        label(for="photo") Upload Photo
+        input#photo(type="file", name="photo", accept="image/*")
+        img#photo-preview.hidden
+
+      .form-actions
+        button(type="submit") Publish
+  
+block scripts
+  script(src="/public/scripts/write.js") 

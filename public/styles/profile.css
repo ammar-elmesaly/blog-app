@@ -43,6 +43,7 @@ button {
 }
 
 .edit-profile, .delete-profile {
+  display: block;
   margin-top: 20px;
 }
 
@@ -54,6 +55,7 @@ button {
   border-radius: 4px;
   border-color: var(--button-delete-background);
   transition-duration: 0.1s;
+  font-size: 16px;
 }
 
 .delete-profile:hover {
@@ -103,4 +105,22 @@ button {
   border-radius: 5px;
   margin-top: 20px;
   padding: 10px;
+}
+
+/* Logout Link */
+
+a.logout-btn {
+  display: inline-block;
+  padding: 6px 10px 6px 10px;
+  background: #ededf0;
+  color: var(--button-delete-color);
+  text-decoration: none;
+  border-radius: 5px;
+  transition: 0.2s ease-in-out, transform 0.1s ease-in-out;
+  margin-top: 20px;
+}
+
+a.logout-btn:hover {
+  background: var(--button-delete-background);
+  color: white;
 }

@@ -1,0 +1,79 @@
+.write-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.write-container h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #333;
+}
+
+.write-form .form-group {
+  margin-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.write-form label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #444;
+}
+
+.write-form input[type="text"],
+.write-form textarea,
+.write-form input[type="file"] {
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.write-form input[type="text"]:focus,
+.write-form textarea:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+.write-form textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.form-actions {
+  text-align: right;
+}
+
+.form-actions button {
+  background: var(--button-main-color);
+  color: white;
+  font-size: 1rem;
+  padding: 0.7rem 1.4rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.form-actions button:hover {
+  background: var(--button-main-color-hover);
+}
+
+#photo-preview {
+  margin-top: 1rem;
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.hidden {
+  display: none;
+}
