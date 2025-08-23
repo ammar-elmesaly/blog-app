@@ -10,20 +10,28 @@ block content
   .posts
     each post in posts
       .post
-        h2.post-title #{post.title}
-        .grid
+        .header-grid
           img.author-icon(
             src= post.author.avatarSrc ? post.author.avatarSrc : "/public/images/default-avatar.png",
             alt="Profile"
           )
           .author-info
             .username #{post.author.username}
-            .date #{post.date}
+            .date #{post.dateFormatted}
+
+        if (post.isAuthor)
+          .delete-post
+            button(data-post-id=post._id class="delete-post-btn")
+              img(src="/public/images/trash-icon.png", alt="Delete Post")
+            
+        h2.post-title #{post.title}
         p.content #{post.content}
         if (post.photoURL)
           img.post-photo(src=post.photoURL)
 
 
-
   if (error)
     div.error-message #{error}
+
+block scripts
+  script(src="/public/scripts/home.js") 

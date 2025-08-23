@@ -3,6 +3,19 @@ body {
   background: #f1f1f1;
 }
 
+.post {
+  background-color: white;
+  padding: 40px;
+  margin-top: 20px;
+  position: relative;
+}
+
+.post:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 .post-title {
   margin-top: 0px;
 }
@@ -17,10 +30,29 @@ body {
   border-radius: 6px;
 }
 
-.grid {
+.delete-post {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+}
+
+.delete-post-btn {
+  background-color: var(--button-delete-background);
+  border: none;
+  border-radius: 4px;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.delete-post img {
+  width: 24px;
+}
+
+.header-grid {
   display: flex;
   align-items: center;   /* vertically center the image with text */
   gap: 0.8rem;           /* space between photo and text */
+  margin-bottom: 12px;
 }
 
 .author-icon {
@@ -45,16 +77,4 @@ body {
 .date {
   font-size: 0.85rem;
   color: #666;
-}
-
-.post {
-  background-color: white;
-  padding: 40px;
-  margin-top: 20px;
-}
-
-.post:after {
-  content: "";
-  display: table;
-  clear: both;
 }

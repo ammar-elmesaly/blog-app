@@ -39,6 +39,7 @@ function middlewares(app) {
     cookie: {
       secure: true,
       expires: false,
+      httpOnly: false
     }
   }));
 }
