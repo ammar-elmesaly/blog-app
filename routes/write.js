@@ -17,7 +17,6 @@ router.post('/new', mustLogIn, upload.single('photo'), async (req, res, next) =>
       content: req.body.content,
       date: new Date(),
       photoURL: req.file ? req.file.path : undefined,
-      likes: 0
     });
     res.redirect('/');
   } catch (err) {

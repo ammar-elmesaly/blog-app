@@ -18,10 +18,7 @@ const postSchema = new mongoose.Schema({
     require: true
   },
   photoURL: String,
-  likes: {
-    type: Number,
-    required: true
-  }
+  likesAuthors: [mongoose.Schema.Types.ObjectId]
 });
 
 module.exports = mongoose.model('Post', postSchema);

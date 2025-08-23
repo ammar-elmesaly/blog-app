@@ -7,6 +7,9 @@ block link_css
   link(href="/public/styles/home.css", rel="stylesheet")
 
 block content
+  if posts.length == 0
+    .no-posts
+      p No posts yet — be the first one to post!
   .posts
     each post in posts
       .post
@@ -28,6 +31,18 @@ block content
         p.content #{post.content}
         if (post.photoURL)
           img.post-photo(src=post.photoURL)
+        
+        .post-actions
+          button.like-btn(data-post-id=post._id)
+            if (post.isLiked)
+              img.like-img(src="/public/images/star-fill.png", alt="like")
+            else
+              img.like-img(src="/public/images/star.png", alt="like")
+
+            .like-cnt #{post.likesCount || 0}
+          button.comment-toggle-btn(data-post-id=post._id)
+            img.comment-img(src="/public/images/comment-icon.png", alt="comment")
+            span Comment
 
 
   if (error)
