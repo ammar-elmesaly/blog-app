@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { mustNotLogIn, redirectToHome } = require('../middlewares/security');
+const { Generic, redirectToHome } = require('../middlewares/security');
 
-router.get('/', mustNotLogIn, (req, res) => {
+router.get('/', Generic.mustNotLogIn, (req, res) => {
   res.render('pages/about.pug', {
     currentPage: 'about'
   });

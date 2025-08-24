@@ -1,16 +1,29 @@
 const express = require('express');
 const router = express.Router();
-const { mustLogIn, redirectToLogin } = require('../middlewares/security');
+const { Generic, redirectToLogin } = require('../middlewares/security');
 const { createPost, getPosts, deleteAllPosts } = require('../services/postService');
 const multer = require('multer');
 const upload = multer({dest: './uploads/posts'});
+const { body, validationResult } = require('express-validator');
 
-router.get('/new', mustLogIn, (req, res) => {
+router.get('/new', Generic.mustLogIn, (req, res) => {
   res.render('pages/write', {avatarSrc: req.session.user.avatarSrc, currentPage: 'write'});
 });
 
-router.post('/new', mustLogIn, upload.single('photo'), async (req, res, next) => {
+router.post('/new',
+  Generic.mustLogIn,
+
+  upload.single('photo'),
+  [
+    body('title').notEmpty()
+      .withMessage('A title is required'),
+
+    body('content').notEmpty()
+      .withMessage('Content is required')
+  ],
+  async (req, res, next) => {
   try {
+    // TODO express-validator handling
     await createPost({
       author: req.session.user._id,
       title: req.body.title,

@@ -3,11 +3,11 @@ const router = express.Router();
 
 const multer = require('multer');
 const upload = multer({dest: './uploads/avatars'});
-const { mustLogIn, redirectToLogin, checkOtherUsernameExists } = require('../middlewares/security');
+const { Generic, Profile, redirectToLogin } = require('../middlewares/security');
 const { validationResult, body } = require('express-validator');
 const { updateUserInfo, deleteUser } = require('../services/userService');
 
-router.get('/', mustLogIn, (req, res) => {
+router.get('/', Generic.mustLogIn, (req, res) => {
   res.render('pages/profile', {
     username: req.session.user.username,
     desc: req.session.user.description,
@@ -20,8 +20,8 @@ router.post('/update',
     .matches(/^[a-zA-Z0-9_]{3,20}$/)
     .withMessage('Username must be 3–20 characters and only contain letters, numbers, and underscores'),
 
-  mustLogIn,
-  checkOtherUsernameExists,
+  Generic.mustLogIn,
+  Profile.checkOtherUsernameExists,
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -44,7 +44,7 @@ router.post('/update',
     }
 });
 
-router.post('/delete', mustLogIn, async (req, res, next) => {
+router.post('/delete', Generic.mustLogIn, async (req, res, next) => {
   try {
     await deleteUser(req.session.user._id);
     req.session.destroy(() => {
@@ -55,7 +55,7 @@ router.post('/delete', mustLogIn, async (req, res, next) => {
   }
 });
 
-router.post('/upload', mustLogIn, upload.single('avatar'), async (req, res, next) => {
+router.post('/upload', Generic.mustLogIn, upload.single('avatar'), async (req, res, next) => {
 
   try {
     const user = await updateUserInfo(req.session.user._id, {avatarSrc: '/' + req.file.path});
@@ -67,11 +67,11 @@ router.post('/upload', mustLogIn, upload.single('avatar'), async (req, res, next
 });
 
 router.use((err, req, res, next) => {
-  if (err === "Username already exists, please choose another one.")
+  if (err.name === "UsernameExistsError")
     return res.render('pages/profile', {
       username: req.session.user.username,
       desc: req.session.user.description,
-      error: err,
+      error: err.message,
       avatarSrc: req.session.user.avatarSrc
     });
 
