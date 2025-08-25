@@ -98,15 +98,6 @@ button {
   width: 24px;
 }
 
-
-.error-message {
-  background-color: var(--error-message-background);
-  color: var(--error-message-color);
-  border-radius: 5px;
-  margin-top: 20px;
-  padding: 10px;
-}
-
 /* Logout Link */
 
 a.logout-btn {

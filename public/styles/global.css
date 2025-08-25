@@ -18,3 +18,11 @@ main {
   padding: 5px 30px 30px 30px;
   margin-top: 60px;
 }
+
+.error-message {
+  background-color: var(--error-message-background);
+  color: var(--error-message-color);
+  border-radius: 5px;
+  margin-top: 20px;
+  padding: 10px;
+}

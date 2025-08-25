@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Generic, redirectToLogin } = require('../middlewares/security');
+const { Generic, Home } = require('../middlewares/security');
 const { getPost, getPosts, deletePost, likePost } = require('../services/postService');
 const { timeAgo } = require('../services/dateService');
 const ObjectId = require('mongoose').Types.ObjectId;
@@ -21,6 +21,7 @@ router.get('/', Generic.mustLogIn, async (req, res, next) => {
       avatarSrc: req.session.user.avatarSrc,
       posts
     });
+    
   } catch (err) {
     next(err);
   }
@@ -86,6 +87,6 @@ router.put('/like/post/:id', Generic.mustLogIn, async (req, res, next) => {
 
 });
 
-router.use(redirectToLogin);
+router.use(Home.handleErrors);
 
 module.exports = router;

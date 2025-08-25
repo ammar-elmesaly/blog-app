@@ -1,53 +1,40 @@
 const { findUser } = require('../services/userService');
 const { verify } = require('../services/hashService');
-
-class NotLoggedInError extends Error {
-  constructor(message = "You are not logged in.") {
-    super(message);
-    this.name = "NotLoggedInError";
-  }
-}
-
-class AlreadyLoggedInError extends Error {
-  constructor(message = "You are already logged in.") {
-    super(message);
-    this.name = "AlreadyLoggedInError";
-  }
-}
-
-class UsernameExistsError extends Error {
-  constructor(message = "Username already exists, please choose another one.") {
-    super(message);
-    this.name = "UsernameExistsError";
-  }
-}
-
-class UsernameOrPasswordError extends Error {
-  constructor(message = "Wrong username or password.") {
-    super(message);
-    this.name = "UsernameOrPasswordError";
-  }
-}
-
-class PasswordMatchingError extends Error {
-  constructor(message = "Passwords don't match") {
-    super(message);
-    this.name = "PasswordMatchingError";
-  }
-}
+const { validationResult } = require('express-validator');
+const {
+  SignupError,
+  LoginError,
+  ProfileError,
+  NotLoggedInError,
+  AlreadyLoggedInError
+} = require('./errors');
 
 const Signup = {
-  async checkUsernameExists(req, res, next) {
+  async validateSignup(req, res, next) {
     const user = await findUser(req.body.username);
-    if (user) return next(new UsernameExistsError());
+    if (user) return next(new SignupError("Username already exists, please choose another one.", "USERNAME_EXISTS"));
+    
+    if (req.body.password !== req.body.repeat_password) {
+      return next(new SignupError("Passwords don't match", "PASSWORD_MISMATCH"));
+    }
     next();
   },
 
-  async validatePasswordRepeat(req, res, next) {
-    if (req.body.password !== req.body.repeat_password) {
-      return next(new PasswordMatchingError());
+  handleValidation(req, res, next) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.render('pages/signup', {currentPage: 'signup', error: errors.array()[0].msg});
     }
     next();
+  },
+
+  handleErrors(err, req, res, next) {
+    if (err instanceof AlreadyLoggedInError)
+      return res.redirect('/');
+
+    if (!(err instanceof SignupError)) return next(err);
+
+    res.render('pages/signup', { currentPage: 'signup', error: err.message });
   }
 }
 
@@ -57,25 +44,94 @@ const Login = {
 
     const user = await findUser(req.body.username);
     if (!user)
-      return next(new UsernameOrPasswordError());
+      return next(new LoginError("Wrong username or password.", "WRONG_USR_OR_PASS"));
 
     const passwordVerify = await verify(req.body.password, user.password);
+
     if (!passwordVerify)
-      return next(new UsernameOrPasswordError());
+      return next(new LoginError("Wrong username or password.", "WRONG_USR_OR_PASS"));
 
     req.user = user;
     next();
+  },
+
+  handleErrors(err, req, res, next) {
+    if (err instanceof AlreadyLoggedInError)
+      return res.redirect('/');
+
+    if (!(err instanceof LoginError)) return next(err);
+
+    res.render('pages/login', {currentPage: 'login', error: err});
   }
 }
 
 const Profile = {
-  async checkOtherUsernameExists(req, res, next) {
-    // This checks if another username exists (not including the user)
-    // Useful in edit profile utility
 
+  async verifyProfileUpdate(req, res, next) {
     const user = await findUser(req.body.username);
-    if (user && !user._id.equals(req.session.user._id)) return next(new UsernameExistsError());
+    if (user && !user._id.equals(req.session.user._id)) // if Username exists and it's not the user's
+      return next(new ProfileError("Username already exists, please choose another one.", "USERNAME_EXISTS"));  
     next();
+  },
+
+  handleValidation(req, res, next) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.render('pages/profile', {
+        username: req.session.user.username,
+        error: errors.array()[0].msg,
+        avatarSrc: req.session.user.avatarSrc
+      });
+    }
+
+    next();
+  },
+
+  handleErrors(err, req, res, next) {
+    if (err instanceof NotLoggedInError)
+      return res.redirect('/login');
+
+    if (!(err instanceof ProfileError)) return next(err);
+    
+    return res.render('pages/profile', {
+      username: req.session.user.username,
+      desc: req.session.user.description,
+      error: err.message,
+      avatarSrc: req.session.user.avatarSrc
+    }); 
+  }
+}
+
+const Write = {
+  handleValidation(req, res, next) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.render('pages/write', {
+        avatarSrc: req.session.user.avatarSrc,
+        currentPage: 'write',
+        error: errors.array()[0].msg
+      });
+    }
+
+    next();
+  },
+
+  handleErrors(err, req, res, next) {
+    if (err instanceof NotLoggedInError)
+      return res.redirect('/login');
+
+    next(err);
+  }
+};
+
+const Home = {
+  handleErrors(err, req, res, next) {
+    if (err instanceof NotLoggedInError)
+      return res.redirect('/login');
+
+    next(err);
   }
 }
 
@@ -115,6 +171,8 @@ module.exports = {
   Login,
   Signup,
   Profile,
+  Write,
+  Home,
   redirectToLogin,
   redirectToHome,
 };

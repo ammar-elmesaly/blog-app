@@ -3,8 +3,8 @@ const router = express.Router();
 
 const multer = require('multer');
 const upload = multer({dest: './uploads/avatars'});
-const { Generic, Profile, redirectToLogin } = require('../middlewares/security');
-const { validationResult, body } = require('express-validator');
+const { Generic, Profile } = require('../middlewares/security');
+const { body } = require('express-validator');
 const { updateUserInfo, deleteUser } = require('../services/userService');
 
 router.get('/', Generic.mustLogIn, (req, res) => {
@@ -21,16 +21,10 @@ router.post('/update',
     .withMessage('Username must be 3–20 characters and only contain letters, numbers, and underscores'),
 
   Generic.mustLogIn,
-  Profile.checkOtherUsernameExists,
+  Profile.handleValidation,
+  Profile.verifyProfileUpdate,
+  
   async (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.render('pages/profile', {
-        username: req.session.user.username,
-        error: errors.array()[0].msg,
-        avatarSrc: req.session.user.avatarSrc
-      });
-    }
     try {
       const user = await updateUserInfo(req.session.user._id, {
         username: req.body.username,
@@ -42,7 +36,8 @@ router.post('/update',
     } catch (err) {
       next(err);
     }
-});
+  }
+);
 
 router.post('/delete', Generic.mustLogIn, async (req, res, next) => {
   try {
@@ -56,29 +51,16 @@ router.post('/delete', Generic.mustLogIn, async (req, res, next) => {
 });
 
 router.post('/upload', Generic.mustLogIn, upload.single('avatar'), async (req, res, next) => {
-
   try {
     const user = await updateUserInfo(req.session.user._id, {avatarSrc: '/' + req.file.path});
     req.session.user = user;
     res.redirect('/profile');
+
   } catch (err) {
     next(err);
   }
 });
 
-router.use((err, req, res, next) => {
-  if (err.name === "UsernameExistsError")
-    return res.render('pages/profile', {
-      username: req.session.user.username,
-      desc: req.session.user.description,
-      error: err.message,
-      avatarSrc: req.session.user.avatarSrc
-    });
-
-  next(err);
-});
-
-router.use(redirectToLogin);  // redirects to login on error
-
+router.use(Profile.handleErrors);
 
 module.exports = router;

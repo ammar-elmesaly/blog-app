@@ -25,6 +25,8 @@ block content
 
       .form-actions
         button(type="submit") Publish
-  
+        
+  if (error)
+    div.error-message #{error}
 block scripts
   script(src="/public/scripts/write.js") 
