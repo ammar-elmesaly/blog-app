@@ -22,12 +22,12 @@ app.get('/home', (req, res) => {
 
 app.use(allRouters);
 
-app.use((err, req, res, next) => {  // Server Global Error handler
-  res.status(500).send(err);
-});
-
 app.get('/{*any}', (req, res) => {  // This must be the last router. don't add any routers below it
   res.render('pages/404.pug');
+});
+
+app.use((err, req, res, next) => {  // Server Global Error handler
+  res.render('pages/error.pug', {error: err});
 });
 
 /*

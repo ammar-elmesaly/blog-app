@@ -28,31 +28,20 @@ router.post('/new',
   Write.handleValidation,
 
   async (req, res, next) => {
-    try {
-      await createPost({
-        author: req.session.user._id,
-        title: req.body.title,
-        content: req.body.content,
-        date: new Date(),
-        photoURL: req.file ? req.file.path : undefined,
-      });
-      res.redirect('/');
-
-    } catch (err) {
-      next(err);
-    }
+    await createPost({
+      author: req.session.user._id,
+      title: req.body.title,
+      content: req.body.content,
+      date: new Date(),
+      photoURL: req.file ? req.file.path : undefined,
+    });
+    res.redirect('/');
   }
 );
 
 router.get('/posts', async (req, res) => {
-  try {
-    const posts = await getPosts();
-    res.send(posts);
-  
-  } catch(err) {
-    next(err);
-  }
-
+  const posts = await getPosts();
+  res.send(posts);
 });
 
 router.get('/delete-all', async (req, res) => {

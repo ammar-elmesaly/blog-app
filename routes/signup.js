@@ -21,13 +21,9 @@ router.post('/',
   Signup.validateSignup,
   
   async (req, res, next) => {
-    try {
-      const user = await addUser(req.body.username, req.body.password);
-      req.session.user = user;
-      res.redirect('/');
-    } catch (err) {
-      next(err);
-    }
+    const user = await addUser(req.body.username, req.body.password);
+    req.session.user = user;
+    res.redirect('/');
   }
 );
 
@@ -36,13 +32,8 @@ router.get('/', Generic.mustNotLogIn, (req, res) => {
 });
 
 router.get('/get', async (req, res) => {
-  try {
-    const response = await getUsers();
-    res.send(response);
-    
-  } catch (err) {
-    next(err);
-  }
+  const response = await getUsers();
+  res.send(response);
 });
 
 router.use(Signup.handleErrors);

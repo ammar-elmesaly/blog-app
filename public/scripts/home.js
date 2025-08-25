@@ -6,10 +6,6 @@ async function deletePost(id) {
   if (res.ok) window.location.href = '/';
 }
 
-function updateLikes(buttonElement) {
-
-}
-
 async function likePost(id, button) {
   const res = await fetch(`https://localhost:3000/like/post/${id}`, {
     method: "PUT",
