@@ -36,10 +36,19 @@ class ProfileError extends Error {
   }
 }
 
+class PostNotFound extends Error {
+  constructor(message = "Couldn't find that post.", status = 404) {
+    super(message);
+    this.name = "PostNotFound"; 
+    this.status = status;
+  }
+}
+
 module.exports = {
   SignupError,
   LoginError,
   ProfileError,
   NotLoggedInError,
   AlreadyLoggedInError,
+  PostNotFound
 };

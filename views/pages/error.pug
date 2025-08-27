@@ -9,3 +9,5 @@ html(lang="en")
     main
       .number #{error.status || 500}
       .message #{error.message || "Internal Server Error"}
+      if (error.status == 404)
+        a(href="/") Back to home

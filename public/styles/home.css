@@ -106,8 +106,22 @@ body {
   gap: 5px;
 }
 
-.post-actions button:hover {
-  color: #0073e6;
+.like-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  color: #555;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.like-btn:hover {
+  background: #eee;
 }
 
 .no-posts {

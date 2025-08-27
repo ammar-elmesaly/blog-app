@@ -1,12 +1,15 @@
 const { findUser } = require('../services/userService');
 const { verify } = require('../services/hashService');
+const ObjectId = require('mongoose').Types.ObjectId;
+const { getPostAndPopulate } = require('../services/postService');
 const { validationResult } = require('express-validator');
 const {
   SignupError,
   LoginError,
   ProfileError,
   NotLoggedInError,
-  AlreadyLoggedInError
+  AlreadyLoggedInError,
+  PostNotFound
 } = require('./errors');
 
 const Signup = {
@@ -101,7 +104,7 @@ const Profile = {
       avatarSrc: req.session.user.avatarSrc
     }); 
   }
-}
+};
 
 const Write = {
   handleValidation(req, res, next) {
@@ -133,7 +136,40 @@ const Home = {
 
     next(err);
   }
-}
+};
+
+const Comments = {
+
+  handleValidation(req, res, next) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      console.log(errors.array()[0].msg);
+      return;
+    }
+    next();
+  },
+
+  async verifyGetPost(req, res, next) {
+
+    if (!ObjectId.isValid(req.params.id))
+      return next(new PostNotFound());
+
+    const post = await getPostAndPopulate(req.params.id);
+
+    if (!post)
+      return next(new PostNotFound());
+
+    req.post = post;
+    next();
+  },
+
+  handleErrors(err, req, res, next) {
+    if (err instanceof NotLoggedInError)
+      return res.redirect('/login');
+
+    next(err);
+  }
+};
 
 const Generic = {
   mustLogIn(req, res, next) {
@@ -151,15 +187,7 @@ const Generic = {
       next();
     }
   }
-}
-
-
-// Error handling middleware
-
-function redirectToLogin(err, req, res, next) {
-  if (!(err instanceof NotLoggedInError)) return next(err);
-  res.redirect('/login');
-}
+};
 
 function redirectToHome(err, req, res, next) {
   if (!(err instanceof AlreadyLoggedInError)) return next(err);
@@ -173,6 +201,6 @@ module.exports = {
   Profile,
   Write,
   Home,
-  redirectToLogin,
+  Comments,
   redirectToHome,
 };

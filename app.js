@@ -23,10 +23,14 @@ app.get('/home', (req, res) => {
 app.use(allRouters);
 
 app.get('/{*any}', (req, res) => {  // This must be the last router. don't add any routers below it
-  res.render('pages/404.pug');
+  res.render('pages/error.pug', {error: {
+    message: "Page not found.",
+    status: 404
+  }});
 });
 
 app.use((err, req, res, next) => {  // Server Global Error handler
+  console.log(err)
   res.render('pages/error.pug', {error: err});
 });
 

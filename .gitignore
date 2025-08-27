@@ -2,6 +2,7 @@ node_modules/
 .env
 uploads/
 *.svg
+.vscode/
 
 # Ignore SSL certificates
 

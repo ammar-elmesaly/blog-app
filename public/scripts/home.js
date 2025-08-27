@@ -38,13 +38,19 @@ document.querySelectorAll('.delete-post-btn')
   .forEach(button => {
     button.addEventListener('click', () => {
       let res = confirm("Are you sure to delete that post?");
-      if (res) deletePost(button.dataset.postId);
+      if (res) deletePost(button.closest('.post').dataset.postId);
     });
   });
 
-document.querySelectorAll('.like-btn')
-  .forEach(button => {
+document.querySelectorAll('.like-btn').forEach(button => {
     button.addEventListener('click', () => {
-      likePost(button.dataset.postId, button);
+      likePost(button.closest('.post').dataset.postId, button);
     });
   });
+
+document.querySelectorAll('.comment-toggle-btn').forEach(button => {
+  button.addEventListener('click', () => {
+    const postId = button.closest('.post').dataset.postId;
+    window.location.href = `/post/${postId}/comments/`;
+  });
+});

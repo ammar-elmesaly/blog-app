@@ -1,0 +1,64 @@
+extends ../layouts/main_private.pug
+
+block title
+  title="Comments"
+
+block link_css
+  link(href="/public/styles/post.css", rel="stylesheet")
+  link(href="/public/styles/comment.css", rel="stylesheet")
+
+block content
+  .post(data-post-id=post._id)
+    .header-grid
+      img.author-icon(
+        src= post.author.avatarSrc ? post.author.avatarSrc : "/public/images/default-avatar.png",
+        alt="Profile"
+      )
+      .author-info
+        .username #{post.author.username}
+        .date #{post.dateFormatted}
+        
+    h2.post-title #{post.title}
+    p.content #{post.content}
+    if (post.photoURL)
+      .post-photo-container
+        img.post-photo(src=post.photoURL)
+    
+
+    .comment-card
+        form.bubble(action=`/post/${post._id}/comments/new` method="POST")
+          label.sr-only(for="comment") Write a comment
+          textarea#comment.comment-input(placeholder="Write a comment…" name="content")
+          button.send(type="submit") Post
+          
+    if post.comments.length == 0
+      .no-comments
+        p No comments yet — be the first one to comment!
+    else
+      .comments
+        each comment in post.comments
+          .comment(data-comment-id=comment._id)
+            .header-grid
+              img.author-icon(
+                src= comment.author.avatarSrc ? comment.author.avatarSrc : "/public/images/default-avatar.png",
+                alt="Profile"
+              )
+              .author-info
+                .username #{comment.author.username}
+                .date #{comment.dateFormatted}
+
+            if (comment.isAuthor)
+              .delete-comment
+                button(class="delete-comment-btn")
+                  img(src="/public/images/trash-icon.png", alt="Delete Comment")
+
+            p.content #{comment.content}
+
+            .comment-actions
+              button.like-comment-btn
+                if (comment.isLiked)
+                  img.like-img(src="/public/images/star-fill.png", alt="like")
+                else
+                  img.like-img(src="/public/images/star.png", alt="like")
+                  
+                .like-cnt #{comment.likesCount || 0}
