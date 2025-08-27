@@ -31,6 +31,6 @@ cp sample.env .env
 
 **Likes**: Posts and comments can be liked by users.
 
-**Comments**: Users can comment on posts (todo).
+**Comments**: Users can comment on posts.
 
 **Avatars**: Upload and display profile images.
