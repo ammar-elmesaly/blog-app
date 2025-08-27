@@ -38,7 +38,7 @@ function middlewares(app) {
     }),
     cookie: {
       secure: true,
-      expires: false,
+      maxAge: 31557600000,
       httpOnly: false
     }
   }));

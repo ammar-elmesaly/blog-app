@@ -12,7 +12,7 @@ async function likePost(id, button) {
     headers: {
       "Content-Type": "application/json"
     }
-});
+  });
 
   if (!res.ok) {
     throw new Error(`Server error: ${res.status}`);
@@ -37,8 +37,8 @@ function updateLikeElement(isLiked, likesCount, button) {
 document.querySelectorAll('.delete-post-btn')
   .forEach(button => {
     button.addEventListener('click', () => {
-      let res = confirm("Are you sure to delete that post?");
-      if (res) deletePost(button.closest('.post').dataset.postId);
+      let confirmation = confirm("Are you sure to delete that post?");
+      if (confirmation) deletePost(button.closest('.post').dataset.postId);
     });
   });
 

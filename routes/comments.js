@@ -11,7 +11,11 @@ router.get('/:id/comments', Generic.mustLogIn, Comments.verifyGetPost, (req, res
 
   post.comments.map(comment => {
     comment.dateFormatted = timeAgo(comment.date);
+    comment.isLiked = comment.likesAuthors.includes(req.session.user._id);
+    comment.likesCount = comment.likesAuthors.length;
+    comment.isAuthor = req.session.user._id.toString() === comment.author._id.toString();
   });
+  
   res.render('pages/comments', {post, avatarSrc: req.session.user.avatarSrc});
 });
 

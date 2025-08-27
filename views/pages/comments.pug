@@ -51,7 +51,7 @@ block content
               .delete-comment
                 button(class="delete-comment-btn")
                   img(src="/public/images/trash-icon.png", alt="Delete Comment")
-
+            
             p.content #{comment.content}
 
             .comment-actions
@@ -62,3 +62,6 @@ block content
                   img.like-img(src="/public/images/star.png", alt="like")
                   
                 .like-cnt #{comment.likesCount || 0}
+
+block scripts
+  script(src="/public/scripts/comment.js") 
