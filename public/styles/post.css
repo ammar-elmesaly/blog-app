@@ -1,9 +1,12 @@
 .post-title {
   margin-top: 0px;
+  margin-left: 50px;
 }
 
 .content {
   font-size: 18px;
+  margin-left: 50px;
+  width: 90%;
 }
 
 .post-photo-container {
@@ -22,6 +25,7 @@
   align-items: center;
   gap: 0.8rem;
   margin-bottom: 12px;
+  margin-left: 50px;
 }
 
 .author-icon {

@@ -9,7 +9,7 @@
 }
 
 /* Header layout (avatar + username/date + delete btn) */
-.comment .header-grid {
+.comment .comment-header-grid {
   display: grid;
   grid-template-columns: 40px 1fr auto;
   align-items: center;

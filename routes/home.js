@@ -12,6 +12,7 @@ router.get('/', Generic.mustLogIn, async (req, res, next) => {
     post.dateFormatted = timeAgo(post.date);
     post.isAuthor = req.session.user._id.toString() === post.author._id.toString();
     post.likesCount = post.likesAuthors.length;
+    post.commentsCount = post.comments.length;
     post.isLiked = post.likesAuthors.includes(req.session.user._id);
     return post;
   });

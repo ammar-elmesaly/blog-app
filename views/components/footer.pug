@@ -1,2 +1,17 @@
-// TODO
-div This is my footer
+footer.site-footer(role='contentinfo')
+  .site-footer__inner
+    .site-footer__brand
+      a.site-footer__home(href='/', aria-label='Home')
+        span.site-footer__logo Blog App
+      p.site-footer__tagline A simple blog about code & life.
+
+    ul.site-footer__social(aria-label='Social links')
+      li: a.site-footer__social-link(href='https://github.com/ammar-elmesaly', target='_blank') GitHub
+      li: a.site-footer__social-link(href='https://www.linkedin.com/in/ammar-elmesaly-56593b323/', target='_blank') LinkedIn
+
+  .site-footer__meta
+    p
+      | © #{new Date().getFullYear()} Blog App. Released under MIT License
+    p
+      | Source code: 
+      a(href='https://github.com/ammar-elmesaly/blog-app', target='_blank') GitHub Repo

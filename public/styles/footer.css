@@ -1,0 +1,78 @@
+/* === Footer Styles === */
+.site-footer {
+  border-top: 1px solid #e5e7eb;   /* light gray */
+  background: #fafafa;
+  color: #374151;                  /* slate-700 */
+  padding: 2rem 1rem;
+  font-size: 0.95rem;
+}
+
+.site-footer__inner {
+  width: 100%;
+  margin: 0 auto 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.site-footer__brand {
+  flex: 1 1 250px;
+}
+
+.site-footer__home {
+  text-decoration: none;
+  color: inherit;
+}
+
+.site-footer__logo {
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 0.3px;
+}
+
+.site-footer__tagline {
+  color: #6b7280;  /* slate-500 */
+  margin: 0.3rem 0 0;
+  font-size: 0.9rem;
+}
+
+.site-footer__social {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.site-footer__social-link {
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.site-footer__social-link:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.site-footer__meta {
+  width: 100%;
+  margin: 0 auto;
+  padding-top: 0.75rem;
+  border-top: 1px dashed #b8babd;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.site-footer__meta a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.site-footer__meta a:hover {
+  text-decoration: none;
+}

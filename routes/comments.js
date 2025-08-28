@@ -16,7 +16,7 @@ router.get('/:id/comments', Generic.mustLogIn, Comments.verifyGetPost, (req, res
     comment.isAuthor = req.session.user._id.toString() === comment.author._id.toString();
   });
   
-  res.render('pages/comments', {post, avatarSrc: req.session.user.avatarSrc});
+  res.render('pages/comments', {post, avatarSrc: req.session.user.avatarSrc, currentPage: 'home'});
 });
 
 router.post('/:id/comments/new',

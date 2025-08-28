@@ -42,7 +42,7 @@ block content
             .like-cnt #{post.likesCount || 0}
           button.comment-toggle-btn
             img.comment-img(src="/public/images/comment-icon.png", alt="comment")
-            span Comment
+            span #{post.commentsCount || 0}
 
 
   if (error)

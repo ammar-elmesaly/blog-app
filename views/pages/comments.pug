@@ -38,7 +38,7 @@ block content
       .comments
         each comment in post.comments
           .comment(data-comment-id=comment._id)
-            .header-grid
+            .comment-header-grid
               img.author-icon(
                 src= comment.author.avatarSrc ? comment.author.avatarSrc : "/public/images/default-avatar.png",
                 alt="Profile"
