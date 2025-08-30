@@ -25,13 +25,21 @@ block content
       .description.js-description No description provided.
     
     form(class="edit-profile-form" action="/profile/update", method="post")
-      .container
-        input.username-input.js-username-input(type="text", name="username", placeholder="Username" required)
-        textarea(name="desc", rows="5", cols="50") 
+      input.username-input.js-username-input(type="text", name="username", placeholder="Username" required)
+      textarea(name="desc", rows="5", cols="50") 
       button(type="submit") Save
       button(class="cancel-editing js-cancel-editing", type="button") Cancel
 
     button.edit-profile.js-edit-profile Edit profile
+
+    button.change-password.js-change-password Change account password
+
+    form(class="change-password-form" action="/profile/change-password", method="post")
+      input.old-password-input.js-old-password-input(type="password", name="old_password", placeholder="Old password" required)
+      input.new-password-input.js-new-password-input(type="password", name="new_password", placeholder="New password" required)
+      button(type="submit") Save
+      button(class="cancel-password js-cancel-password", type="button") Cancel
+
     a.logout-btn(href="/logout") Logout
     button.delete-profile.js-delete-profile Delete profile
 
@@ -41,7 +49,9 @@ block content
       button(class="cancel-deleting js-cancel-deleting", type="button") Cancel
   
   if (error)
-    div.error-message #{error}
+    div.error-message#error-message #{error}
 
 block scripts
-  script(src="/public/scripts/profile.js") 
+  script(src="/public/scripts/profile.js")
+  if error
+    script(src="/public/scripts/scrollToError.js")

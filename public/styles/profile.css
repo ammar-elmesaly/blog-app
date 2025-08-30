@@ -20,6 +20,9 @@ form.edit-profile-form input, form.edit-profile-form textarea {
   display: block;
   margin-top: 10px;
   margin-bottom: 10px;
+  font-size: 15px;
+  padding: 4px;
+  width: 60%;
 }
 
 form.edit-profile-form textarea {
@@ -45,7 +48,7 @@ button {
   font-size: 16px;
 }
 
-.edit-profile, .delete-profile {
+.edit-profile, .delete-profile, .change-password {
   display: block;
   margin-top: 20px;
 }
@@ -73,6 +76,31 @@ button {
 
 .is-deleting-profile form.delete-profile-form {
   display: block;
+}
+
+.is-deleting-profile .delete-profile {
+  display: none;
+}
+
+/* Change account password */
+
+.is-changing-password form.change-password-form {
+  display: block;
+}
+
+.is-changing-password .change-password {
+  display: none;
+}
+
+form.change-password-form input {
+  display: block;
+  margin-top: 15px;
+  font-size: 15px;
+  width: 60%;
+}
+
+form.change-password-form button {
+  margin-top: 20px;
 }
 
 /* Upload avatar  CSS */

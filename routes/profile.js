@@ -5,7 +5,7 @@ const multer = require('multer');
 const upload = multer({dest: './uploads/avatars'});
 const { Generic, Profile } = require('../middlewares/security');
 const { body } = require('express-validator');
-const { getProfilePage, updateUserInfo, deleteUser, uploadAvatar } = require('../controllers/profileController');
+const { getProfilePage, updateUserInfo, changePassword, deleteUser, uploadAvatar } = require('../controllers/profileController');
 
 router.get('/', Generic.mustLogIn, getProfilePage);
 
@@ -18,6 +18,17 @@ router.post('/update',
   Profile.handleValidation,
   Profile.verifyProfileUpdate,
   updateUserInfo
+);
+
+router.post('/change-password',
+  body('old_password')
+    .matches(/^(?=.*[A-Z])(?=.*\d).{8,}$/)
+    .withMessage('Password must be at least 8 characters, contain one uppercase letter and one number'),
+
+  Generic.mustLogIn,
+  Profile.handleValidation,
+  Profile.validatePasswordChange,
+  changePassword
 );
 
 router.post('/delete', Generic.mustLogIn, deleteUser);

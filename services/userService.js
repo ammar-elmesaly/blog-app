@@ -14,6 +14,10 @@ function findUser(username) {
   return User.findOne({username});
 }
 
+function getUserById(id) {
+  return User.findById(id);
+}
+
 function updateUserInfo(id, updates) {
   return User.findByIdAndUpdate(id, updates, {new: true});
 }
@@ -30,6 +34,7 @@ module.exports = {
   addUser,
   getUsers,
   findUser,
+  getUserById,
   updateUserInfo,
   deleteUser
 }

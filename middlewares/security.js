@@ -1,4 +1,4 @@
-const { findUser } = require('../services/userService');
+const { findUser, getUserById } = require('../services/userService');
 const { verify } = require('../services/hashService');
 const ObjectId = require('mongoose').Types.ObjectId;
 const { getPostAndPopulate } = require('../services/postService');
@@ -83,10 +83,25 @@ const Profile = {
     if (!errors.isEmpty()) {
       return res.render('pages/profile', {
         username: req.session.user.username,
+        desc: req.session.user.description,
         error: errors.array()[0].msg,
         avatarSrc: req.session.user.avatarSrc
       });
     }
+
+    next();
+  },
+
+  async validatePasswordChange(req, res, next) {
+    if (req.body.old_password === req.body.new_password)
+      return next(new ProfileError("Old password cannot be the same as new password", "OLD_NEW_MATCH"));
+
+    const user = await getUserById(req.session.user._id);
+
+    const isValid = await verify(req.body.old_password, user.password);
+
+    if (!isValid)
+      return next(new ProfileError("Old password is not correct", "OLD_PASSWORD_WRONG"));
 
     next();
   },

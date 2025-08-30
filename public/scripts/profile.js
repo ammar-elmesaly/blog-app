@@ -1,6 +1,7 @@
 const profileInfoElement = document.querySelector('.js-profile-information');
 
 function renderEditProfile() {
+  clearClasses();
   profileInfoElement.classList.add('is-editing-profile');
 
   const username = profileInfoElement.querySelector('.js-username-main').textContent;
@@ -8,39 +9,52 @@ function renderEditProfile() {
 
   const descElement = profileInfoElement.querySelector('.js-description');
   const desc = descElement.textContent === "No description provided."
-  ? ""
-  : descElement.textContent;
-  
+    ? ""
+    : descElement.textContent;
+
   const descTextarea = profileInfoElement.querySelector('textarea');
   descTextarea.value = desc;
 
 
 }
 
-function renderProfileInfo(class_name) {
-  profileInfoElement.classList.remove(class_name);
+function renderChangePassword() {
+  clearClasses();
+  profileInfoElement.classList.add('is-changing-password');
 }
 
 function renderDeleteProfile() {
+  clearClasses();
   profileInfoElement.classList.add('is-deleting-profile');
 }
+
+function clearClasses() {
+  profileInfoElement.classList.remove('is-deleting-profile', 'is-editing-profile', 'is-changing-password');
+}
+
 
 document.querySelector('.js-edit-profile')
   .addEventListener('click', renderEditProfile);
 
 document.querySelector('.js-cancel-editing')
-  .addEventListener('click', () => renderProfileInfo('is-editing-profile'));
+  .addEventListener('click', clearClasses);
 
 document.querySelector('.js-delete-profile')
   .addEventListener('click', renderDeleteProfile);
 
 document.querySelector('.js-cancel-deleting')
-  .addEventListener('click', () => renderProfileInfo('is-deleting-profile'))
+  .addEventListener('click', clearClasses)
+
+document.querySelector('.js-change-password')
+  .addEventListener('click', () => renderChangePassword('is-changing-password'));
+
+document.querySelector('.js-cancel-password')
+  .addEventListener('click', clearClasses);
 
 const avatarInputElement = document.querySelector('.js-avatar-input');
 
 document.querySelector('.js-avatar-btn')
-  .addEventListener('click',() => avatarInputElement.click());
+  .addEventListener('click', () => avatarInputElement.click());
 
 avatarInputElement.addEventListener('change', () => {
   avatarInputElement.closest('form').submit();

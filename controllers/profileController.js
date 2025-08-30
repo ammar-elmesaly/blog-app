@@ -1,5 +1,6 @@
 // const { updateUserInfo, deleteUser } = require('../services/userService');
 const userService = require('../services/userService');
+const hashService = require('../services/hashService');
 
 function getProfilePage(req, res) {
   res.render('pages/profile', {
@@ -25,6 +26,12 @@ async function uploadAvatar(req, res, next) {
   res.redirect('/profile');
 }
 
+async function changePassword(req, res, next) {
+  const hashedPassword = await hashService.hash(req.body.new_password);
+  await userService.updateUserInfo(req.session.user._id, {password: hashedPassword});
+  res.redirect('/profile');
+}
+
 async function deleteUser (req, res, next) {
   await userService.deleteUser(req.session.user._id);
   req.session.destroy(() => {
@@ -35,6 +42,7 @@ async function deleteUser (req, res, next) {
 module.exports = {
   getProfilePage,
   updateUserInfo,
+  changePassword,
   deleteUser,
   uploadAvatar
 }
