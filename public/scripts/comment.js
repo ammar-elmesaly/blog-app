@@ -25,23 +25,23 @@ async function likeComment(id, button) {
 
 function updateLikeElement(isLiked, likesCount, button) {
   if (isLiked)
-    button.querySelector('.like-img').src = "/public/images/star-fill.png";
+    button.querySelector('.js-like-img').src = "/public/images/star-fill.png";
 
   else
-    button.querySelector('.like-img').src = "/public/images/star.png";
+    button.querySelector('.js-like-img').src = "/public/images/star.png";
 
-  button.querySelector('.like-cnt').textContent = likesCount;
+  button.querySelector('.js-like-cnt').textContent = likesCount;
 }
 
-document.querySelectorAll('.like-comment-btn').forEach(button => {
+document.querySelectorAll('.js-like-comment-btn').forEach(button => {
   button.addEventListener('click', () => {
-    likeComment(button.closest('.comment').dataset.commentId, button);
+    likeComment(button.closest('.js-comment').dataset.commentId, button);
   });
 });
 
-document.querySelectorAll('.delete-comment-btn').forEach(button => {
+document.querySelectorAll('.js-delete-comment-btn').forEach(button => {
   button.addEventListener('click', () => {
     let confirmation = confirm("Are you sure to delete that comment?");
-    if (confirmation) deleteComment(button.closest('.post').dataset.postId, button.closest('.comment').dataset.commentId);
+    if (confirmation) deleteComment(button.closest('.js-post').dataset.postId, button.closest('.js-comment').dataset.commentId);
   });
 });

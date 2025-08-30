@@ -25,32 +25,32 @@ async function likePost(id, button) {
 
 function updateLikeElement(isLiked, likesCount, button) {
   if (isLiked)
-    button.querySelector('.like-img').src = "/public/images/star-fill.png";
+    button.querySelector('.js-like-img').src = "/public/images/star-fill.png";
 
   else
-    button.querySelector('.like-img').src = "/public/images/star.png";
+    button.querySelector('.js-like-img').src = "/public/images/star.png";
 
-  button.querySelector('.like-cnt').textContent = likesCount;
+  button.querySelector('.js-like-cnt').textContent = likesCount;
 }
 
 
-document.querySelectorAll('.delete-post-btn')
+document.querySelectorAll('.js-delete-post-btn')
   .forEach(button => {
     button.addEventListener('click', () => {
       let confirmation = confirm("Are you sure to delete that post?");
-      if (confirmation) deletePost(button.closest('.post').dataset.postId);
+      if (confirmation) deletePost(button.closest('.js-post').dataset.postId);
     });
   });
 
-document.querySelectorAll('.like-btn').forEach(button => {
+document.querySelectorAll('.js-like-btn').forEach(button => {
     button.addEventListener('click', () => {
-      likePost(button.closest('.post').dataset.postId, button);
+      likePost(button.closest('.js-post').dataset.postId, button);
     });
   });
 
-document.querySelectorAll('.comment-toggle-btn').forEach(button => {
+document.querySelectorAll('.js-comment-toggle-btn').forEach(button => {
   button.addEventListener('click', () => {
-    const postId = button.closest('.post').dataset.postId;
+    const postId = button.closest('.js-post').dataset.postId;
     window.location.href = `/post/${postId}/comments/`;
   });
 });

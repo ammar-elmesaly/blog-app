@@ -1,12 +1,12 @@
-const profileInfoElement = document.querySelector('.profile-information');
+const profileInfoElement = document.querySelector('.js-profile-information');
 
 function renderEditProfile() {
   profileInfoElement.classList.add('is-editing-profile');
 
-  const username = profileInfoElement.querySelector('.username-main').textContent;
-  profileInfoElement.querySelector('.username-input').value = username;
+  const username = profileInfoElement.querySelector('.js-username-main').textContent;
+  profileInfoElement.querySelector('.js-username-input').value = username;
 
-  const descElement = profileInfoElement.querySelector('.description');
+  const descElement = profileInfoElement.querySelector('.js-description');
   const desc = descElement.textContent === "No description provided."
   ? ""
   : descElement.textContent;
@@ -25,21 +25,21 @@ function renderDeleteProfile() {
   profileInfoElement.classList.add('is-deleting-profile');
 }
 
-document.querySelector('.edit-profile')
+document.querySelector('.js-edit-profile')
   .addEventListener('click', renderEditProfile);
 
-document.querySelector('.cancel-editing')
+document.querySelector('.js-cancel-editing')
   .addEventListener('click', () => renderProfileInfo('is-editing-profile'));
 
-document.querySelector('.delete-profile')
+document.querySelector('.js-delete-profile')
   .addEventListener('click', renderDeleteProfile);
 
-document.querySelector('.cancel-deleting')
+document.querySelector('.js-cancel-deleting')
   .addEventListener('click', () => renderProfileInfo('is-deleting-profile'))
 
-const avatarInputElement = document.querySelector('#avatar-input');
+const avatarInputElement = document.querySelector('.js-avatar-input');
 
-document.querySelector('#avatar-btn')
+document.querySelector('.js-avatar-btn')
   .addEventListener('click',() => avatarInputElement.click());
 
 avatarInputElement.addEventListener('change', () => {

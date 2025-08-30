@@ -7,37 +7,38 @@ block link_css
   link(href="/public/styles/profile.css", rel="stylesheet")
 
 block content
-  .profile-information
+  .profile-information.js-profile-information
     img.profile-icon-content(
       src= avatarSrc ? avatarSrc : "/public/images/default-avatar.png",
       alt="Profile"
     )
 
     form(class="upload-avatar-form" enctype="multipart/form-data" action="/profile/upload", method="post")
-      input(id="avatar-input" type="file" name="avatar" value="upload" accept="image/png")
-      button(id="avatar-btn" type="button")
+      input(id="avatar-input" class="js-avatar-input" type="file" name="avatar" value="upload" accept="image/png")
+      button(id="avatar-btn" class="js-avatar-btn" type="button")
         img(src="/public/images/upload-icon.png", alt="Upload")
         
-    h1.username-main #{username}
+    h1.username-main.js-username-main #{username}
     if(desc)
-      .description #{desc}
+      .description.js-description #{desc}
     else
-      .description No description provided.
+      .description.js-description No description provided.
     
     form(class="edit-profile-form" action="/profile/update", method="post")
-      input.username-input(type="text", name="username", placeholder="Username" required)
-      textarea(name="desc", rows="5", cols="50") 
+      .container
+        input.username-input.js-username-input(type="text", name="username", placeholder="Username" required)
+        textarea(name="desc", rows="5", cols="50") 
       button(type="submit") Save
-      button(class="cancel-editing", type="button") Cancel
+      button(class="cancel-editing js-cancel-editing", type="button") Cancel
 
-    button.edit-profile Edit profile
+    button.edit-profile.js-edit-profile Edit profile
     a.logout-btn(href="/logout") Logout
-    button.delete-profile Delete profile
+    button.delete-profile.js-delete-profile Delete profile
 
     form(class="delete-profile-form" action="/profile/delete", method="post")
       h3 Are you sure to delete your profile?
       button(class="confirm-deleting" type="submit") Yes
-      button(class="cancel-deleting", type="button") Cancel
+      button(class="cancel-deleting js-cancel-deleting", type="button") Cancel
   
   if (error)
     div.error-message #{error}

@@ -40,6 +40,9 @@ button {
   margin-right: 10px;
   padding: 5px;
   cursor: pointer;
+  border-radius: 4px;
+  transition-duration: 0.1s;
+  font-size: 16px;
 }
 
 .edit-profile, .delete-profile {
@@ -52,10 +55,7 @@ button {
 .delete-profile {
   display: block;
   color: var(--button-delete-color);
-  border-radius: 4px;
   border-color: var(--button-delete-background);
-  transition-duration: 0.1s;
-  font-size: 16px;
 }
 
 .delete-profile:hover {

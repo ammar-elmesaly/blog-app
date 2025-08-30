@@ -12,7 +12,7 @@ block content
       p No posts yet — be the first one to post!
   .posts
     each post in posts
-      .post(data-post-id=post._id)
+      .post.js-post(data-post-id=post._id)
         .header-grid
           img.author-icon(
             src= post.author.avatarSrc ? post.author.avatarSrc : "/public/images/default-avatar.png",
@@ -24,7 +24,7 @@ block content
 
         if (post.isAuthor)
           .delete-post
-            button(class="delete-post-btn")
+            button(class="delete-post-btn js-delete-post-btn")
               img(src="/public/images/trash-icon.png", alt="Delete Post")
             
         h2.post-title #{post.title}
@@ -33,14 +33,14 @@ block content
           img.post-photo(src=post.photoURL)
         
         .post-actions
-          button.like-btn
+          button.like-btn.js-like-btn
             if (post.isLiked)
-              img.like-img(src="/public/images/star-fill.png", alt="like")
+              img.like-img.js-like-img(src="/public/images/star-fill.png", alt="like")
             else
-              img.like-img(src="/public/images/star.png", alt="like")
+              img.like-img.js-like-img(src="/public/images/star.png", alt="like")
 
-            .like-cnt #{post.likesCount || 0}
-          button.comment-toggle-btn
+            .like-cnt.js-like-cnt #{post.likesCount || 0}
+          button.comment-toggle-btn.js-comment-toggle-btn
             img.comment-img(src="/public/images/comment-icon.png", alt="comment")
             span #{post.commentsCount || 0}
 

@@ -1,5 +1,5 @@
-const photoInput = document.querySelector('#photo');
-const photoPreview = document.querySelector('#photo-preview');
+const photoInput = document.querySelector('.js-photo');
+const photoPreview = document.querySelector('.js-photo-preview');
 
 photoInput.addEventListener('change', () => {
   const file = photoInput.files[0];
