@@ -64,7 +64,7 @@ const Login = {
 
     if (!(err instanceof LoginError)) return next(err);
 
-    res.render('pages/login', {currentPage: 'login', error: err});
+    res.render('pages/login', {currentPage: 'login', error: err.message});
   }
 }
 

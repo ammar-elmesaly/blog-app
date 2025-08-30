@@ -1,16 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const { Login, Generic } = require('../middlewares/security');
+const { getLoginPage, loginUser } = require('../controllers/loginController');
 
-router.get('/', Generic.mustNotLogIn, (req, res) => {
-  res.render('pages/login', {currentPage: 'login'});
-});
+router.get('/', Generic.mustNotLogIn, getLoginPage);
 
-router.post('/', Login.validateLogIn, (req, res) => {
-    const user = req.user;
-    req.session.user = user;
-    res.redirect('/');
-});
+router.post('/', Login.validateLogIn, loginUser);
 
 router.use(Login.handleErrors);
 

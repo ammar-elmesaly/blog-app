@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const { getUsers, addUser, findUser } = require('../services/userService');
 const { body } = require('express-validator');
 const { Generic, Signup } = require('../middlewares/security');
+const { addUser, getSignupPage } = require('../controllers/signupController');
 
 router.post('/',
   [
@@ -19,17 +19,11 @@ router.post('/',
   Generic.mustNotLogIn,
   Signup.handleValidation,
   Signup.validateSignup,
-  
-  async (req, res, next) => {
-    const user = await addUser(req.body.username, req.body.password);
-    req.session.user = user;
-    res.redirect('/');
-  }
+
+  addUser
 );
 
-router.get('/', Generic.mustNotLogIn, (req, res) => {
-  res.render('pages/signup', {currentPage: 'signup'});
-});
+router.get('/', Generic.mustNotLogIn, getSignupPage);
 
 router.get('/get', async (req, res) => {
   const response = await getUsers();
