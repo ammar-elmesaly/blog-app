@@ -20,7 +20,10 @@ block content
 
       .form-group
         label(for="photo") Upload Photo
-        input.js-photo#photo(type="file", name="photo", accept="image/*")
+        .photo-input-container
+          input.js-photo#photo(type="file", name="photo", accept="image/png image/jpeg")
+          button.js-clear-photo.js-hidden(type="button")
+            img(src="/public/images/x-lg.png")
         img.js-photo-preview#photo-preview.hidden
 
       .form-actions

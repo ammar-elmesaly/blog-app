@@ -27,6 +27,11 @@ block content
             button(class="delete-post-btn js-delete-post-btn")
               img(src="/public/images/trash-icon.png", alt="Delete Post")
             
+          .edit-post
+            button(class="edit-post-btn js-edit-post-btn")
+              img(src="/public/images/pencil-fill.png", alt="Edit Post")
+              | Edit
+            
         h2.post-title #{post.title}
         p.content #{post.content}
         if (post.photoURL)

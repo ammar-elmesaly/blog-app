@@ -7,6 +7,9 @@
   --error-message-color-hover: rgb(144, 0, 0);
   --error-message-background: rgb(255, 235, 233);
   --upload-avatar-background: rgb(25, 135, 84);
+
+  --button-edit-background: rgb(230, 243, 239);
+  --button-edit-text: rgb(9, 134, 101);
 }
 
 html {

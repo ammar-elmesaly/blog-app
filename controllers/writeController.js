@@ -10,7 +10,7 @@ async function createPost (req, res, next) {
     title: req.body.title,
     content: req.body.content,
     date: new Date(),
-    photoURL: req.file ? '/' + req.file.path : undefined,
+    photoURL: req.file ? '/' + req.file.path : null,
   });
   res.redirect('/');
 }

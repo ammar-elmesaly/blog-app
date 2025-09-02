@@ -1,0 +1,47 @@
+extends ../layouts/main_private.pug
+
+block title
+  title="Edit Post"
+
+block link_css
+  link(href="/public/styles/write.css", rel="stylesheet")
+
+block content
+  .write-container
+    h1 Edit your post
+    form.write-form(method="post", action=`/edit/${post._id}`, enctype="multipart/form-data")
+      .form-group
+        label(for="title") Title
+        input#title(type="text", name="title", placeholder="Enter title", value=`${post.title}` required)
+
+      .form-group
+        label(for="content") Content
+        textarea#content(name="content", rows="10", placeholder="Write your post...", required) #{post.content}
+
+      .form-group
+        label(for="photo") Upload Photo
+
+        .photo-input-container
+          input.js-photo#photo(type="file", name="photo", accept="image/png image/jpeg")
+          
+          button.js-clear-photo(type="button" class=post.photoURL ? "" : "js-hidden")
+            img(src="/public/images/x-lg.png")
+
+        if (post.photoURL)
+          img.js-photo-preview#photo-preview(src=`${post.photoURL}`)
+          input(id="photoStatus" type="hidden" name="photoStatus" value="uploaded")
+        else
+          img.js-photo-preview#photo-preview.js-hidden
+          input(id="photoStatus" type="hidden" name="photoStatus" value="not_uploaded")
+
+
+      .form-actions
+        button(type="submit") Update
+        
+  if (error)
+    div.error-message#error-message #{error}
+
+block scripts
+  script(src="/public/scripts/write.js") 
+  if error
+    script(src="/public/scripts/scrollToError.js")

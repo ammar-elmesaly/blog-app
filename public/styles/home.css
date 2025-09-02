@@ -44,6 +44,26 @@ body {
   cursor: pointer;
 }
 
+.edit-post {
+  position: absolute;
+  top: 100px;
+  right: 40px;
+}
+
+.edit-post-btn {
+  background-color: var(--button-edit-background);
+  color: var(--button-edit-text);
+  border: 2px solid var(--button-edit-text);
+  border-radius: 4px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.edit-post img {
+  width: 14px;
+  margin-right: 6px;
+}
+
 .delete-post img {
   width: 24px;
 }

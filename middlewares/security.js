@@ -1,7 +1,7 @@
 const { findUser, getUserById } = require('../services/userService');
 const { verify } = require('../services/hashService');
 const ObjectId = require('mongoose').Types.ObjectId;
-const { getPostAndPopulate } = require('../services/postService');
+const { getPostAndPopulate, getPost } = require('../services/postService');
 const { validationResult } = require('express-validator');
 const {
   SignupError,
@@ -144,6 +144,55 @@ const Write = {
   }
 };
 
+const EditPost = {
+  handleValidation(req, res, next) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty())
+      return res.redirect(`/edit/${req.params.post_id}?error=${encodeURIComponent(errors.array()[0].msg)}`);
+
+    next();
+  },
+
+  async verifyGetPost(req, res, next) {
+
+    if (!ObjectId.isValid(req.params.post_id))
+      return next(new PostNotFound());
+
+    const post = await getPost(req.params.post_id);
+
+    if (!post)
+      return next(new PostNotFound());
+
+    if (!post.author.equals(req.session.user._id))
+      return res.sendStatus(401);
+
+    req.post = post;
+    next();
+  },
+
+  async verifyUpdatePost(req, res, next) {
+    if (!ObjectId.isValid(req.params.post_id))
+      return res.sendStatus(400);
+  
+    const post = await getPost(req.params.post_id);
+    
+    if (!post) 
+      return res.sendStatus(404);
+  
+    if (!post.author.equals(req.session.user._id))
+      return res.sendStatus(401);
+
+    next();
+  },
+
+  handleErrors(err, req, res, next) {
+    if (err instanceof NotLoggedInError)
+      return res.redirect('/login');
+
+    next(err);
+  }
+}
+
 const Home = {
   handleErrors(err, req, res, next) {
     if (err instanceof NotLoggedInError)
@@ -215,6 +264,7 @@ module.exports = {
   Signup,
   Profile,
   Write,
+  EditPost,
   Home,
   Comments,
   redirectToHome,

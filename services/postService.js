@@ -48,6 +48,10 @@ function likePost(post_id, user_id, remove) {
   }
 }
 
+function updatePost(post_id, updates) {
+  return Post.findByIdAndUpdate(post_id, updates);
+}
+
 function addCommentToPost(post_id, comment_id) {
   return Post.findByIdAndUpdate(
     post_id,
@@ -71,6 +75,7 @@ module.exports = {
   deletePost,
   deleteAllPosts,
   likePost,
+  updatePost,
   getPostAndPopulate,
   addCommentToPost,
   removeCommentFromPost

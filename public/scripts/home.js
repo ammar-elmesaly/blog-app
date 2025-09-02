@@ -42,6 +42,13 @@ document.querySelectorAll('.js-delete-post-btn')
     });
   });
 
+document.querySelectorAll('.js-edit-post-btn')
+  .forEach(button => {
+    button.addEventListener('click', () => {
+      window.location.href = `/edit/${button.closest('.js-post').dataset.postId}`;
+    });
+  });
+
 document.querySelectorAll('.js-like-btn').forEach(button => {
     button.addEventListener('click', () => {
       likePost(button.closest('.js-post').dataset.postId, button);
