@@ -11,7 +11,7 @@ function getComments(req, res, next) {
     comment.likesCount = comment.likesAuthors.length;
     comment.isAuthor = req.session.user._id.toString() === comment.author._id.toString();
     comment.repliesCount = comment.replies.length;
-    
+
     comment.replies.map(reply => {
       reply.dateFormatted = timeAgo(reply.date);
       reply.isLiked = reply.likesAuthors.includes(req.session.user._id);

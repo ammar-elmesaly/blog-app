@@ -244,6 +244,7 @@ const Replies = {
     }
     next();
   },
+
   handleErrors(err, req, res, next) {
     if (err instanceof NotLoggedInError)
       return res.redirect('/login');

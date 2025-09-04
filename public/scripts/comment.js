@@ -1,9 +1,17 @@
-async function deleteComment(post_id, comment_id) {
-  const res = await fetch(`https://localhost:3000/delete/comment/${comment_id}?post_id=${post_id}`, {
+async function deleteReply(commentId, replyId, postId) {
+  const res = await fetch(`/post/${commentId}/replies/delete?reply_id=${replyId}`, {
     method: "DELETE"
   });
 
-  if (res.ok) window.location.href = `/post/${post_id}/comments`;
+  if (res.ok) window.location.href = `/post/${postId}/comments`;
+}
+
+async function deleteComment(postId, commentId) {
+  const res = await fetch(`/delete/comment/${commentId}?post_id=${postId}`, {
+    method: "DELETE"
+  });
+
+  if (res.ok) window.location.href = `/post/${postId}/comments`;
 }
 
 async function likeComment(id, button) {
@@ -43,6 +51,17 @@ document.querySelectorAll('.js-delete-comment-btn').forEach(button => {
   button.addEventListener('click', () => {
     let confirmation = confirm("Are you sure to delete that comment?");
     if (confirmation) deleteComment(button.closest('.js-post').dataset.postId, button.closest('.js-comment').dataset.commentId);
+  });
+});
+
+document.querySelectorAll('.js-delete-reply-btn').forEach(button => {
+  button.addEventListener('click', () => {
+    let confirmation = confirm("Are you sure to delete that reply?");
+    if (confirmation) deleteReply(
+      button.closest('.js-comment-container').querySelector('.js-comment').dataset.commentId,
+      button.closest('.js-reply').dataset.replyId, 
+      button.closest('.js-post').dataset.postId
+    );
   });
 });
 
