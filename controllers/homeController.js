@@ -22,10 +22,10 @@ async function getHomePage(req, res, next) {
 }
 
 async function deletePost (req, res, next) {
-  if (!ObjectId.isValid(req.params.id))
+  if (!ObjectId.isValid(req.params.post_id))
     return res.sendStatus(400);
 
-  const post = await postService.getPost(req.params.id);
+  const post = await postService.getPost(req.params.post_id);
   
   if (!post) 
     return res.sendStatus(404);
@@ -33,7 +33,7 @@ async function deletePost (req, res, next) {
   if (!post.author.equals(req.session.user._id))
     return res.sendStatus(401);
 
-  await postService.deletePost(req.params.id);
+  await postService.deletePost(req.params.post_id);
   res.sendStatus(200);
 }
 
@@ -55,10 +55,10 @@ async function deleteComment (req, res, next) {
 }
 
 async function likePost (req, res, next) {
-  if (!ObjectId.isValid(req.params.id))
+  if (!ObjectId.isValid(req.params.post_id))
     return res.sendStatus(400);
 
-  const post = await postService.getPost(req.params.id);
+  const post = await postService.getPost(req.params.post_id);
 
   if (!post) 
     return res.sendStatus(404);
@@ -86,10 +86,10 @@ async function likePost (req, res, next) {
 }
 
 async function likeComment (req, res, next) {
-  if (!ObjectId.isValid(req.params.id))
+  if (!ObjectId.isValid(req.params.comment_id))
     return res.sendStatus(400);
 
-  const comment = await commentService.getComment(req.params.id);
+  const comment = await commentService.getComment(req.params.comment_id);
 
   if (!comment) 
     return res.sendStatus(404);

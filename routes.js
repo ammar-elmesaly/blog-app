@@ -18,8 +18,8 @@ router.use('/logout', logoutRouter);
 router.use('/signup', signupRouter);
 router.use('/write', writeRouter);
 router.use('/profile', profileRouter);
-router.use('/post', commentsRouter);
-router.use('/post', repliesRouter);
+router.use('/post/:post_id/', commentsRouter);
+router.use('/post/:post_id/comment/:comment_id/', repliesRouter);
 router.use('/edit', editRouter);
 router.use('/', homeRouter);
 

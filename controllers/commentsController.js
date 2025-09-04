@@ -25,13 +25,13 @@ function getComments(req, res, next) {
 
 async function createComment (req, res) {
 
-  await commentService.createComment(req.params.id, {
+  await commentService.createComment(req.params.post_id, {
     author: req.session.user._id,
     content: req.body.content,
     date: new Date(),
   });
 
-  res.redirect(`/post/${req.params.id}/comments`);
+  res.redirect(`/post/${req.params.post_id}/comments`);
 }
 
 module.exports = {

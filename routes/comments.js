@@ -1,12 +1,12 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 const { Generic, Comments } = require('../middlewares/security');
 const { createComment, getComments } = require('../controllers/commentsController');
 const { body } = require('express-validator');
 
-router.get('/:id/comments', Generic.mustLogIn, Comments.verifyGetPost, getComments);
+router.get('/comments', Generic.mustLogIn, Comments.verifyGetPost, getComments);
 
-router.post('/:id/comments/new',
+router.post('/comment/new',
   body('content').notEmpty()
     .withMessage('Content is required'),
   

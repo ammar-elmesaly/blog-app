@@ -27,7 +27,7 @@ block content
     
 
     .comment-card
-        form.bubble(action=`/post/${post._id}/comments/new` method="POST")
+        form.bubble(action=`/post/${post._id}/comment/new` method="POST")
           label.sr-only(for="comment") Write a comment
           textarea#comment.comment-input(placeholder="Write a comment…" name="content")
           button.send(type="submit") Post
@@ -97,7 +97,7 @@ block content
                     .like-cnt.js-like-cnt #{reply.likesCount || 0}
               
             .reply-card.js-reply-card.js-hidden
-              form.bubble(action=`/post/${comment._id}/replies/new?post_id=${post._id}` method="POST")
+              form.bubble(action=`/post/${post._id}/comment/${comment._id}/reply/new` method="POST")
                 label.sr-only(for="reply") Reply to comment
                 textarea#reply.reply-input(placeholder="Reply to comment…" name="content")
                 button.send(type="submit") Post

@@ -1,10 +1,10 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 const { Generic, Replies } = require('../middlewares/security');
-const { createReply, deleteReply } = require('../controllers/repliesController');
+const { createReply, deleteReply, likeReply } = require('../controllers/repliesController');
 const { body } = require('express-validator');
 
-router.post('/:comment_id/replies/new',
+router.post('/reply/new',
 
   Generic.mustLogIn,
 
@@ -15,10 +15,12 @@ router.post('/:comment_id/replies/new',
   createReply
 );
 
-router.delete('/:comment_id/replies/delete',
+router.delete('/reply/:reply_id/delete',
   Generic.mustLogIn,
   deleteReply
 );
+
+router.post('/reply/:reply_id/like', Generic.mustLogIn, likeReply);
 
 router.use(Replies.handleErrors);
 

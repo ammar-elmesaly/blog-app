@@ -214,11 +214,10 @@ const Comments = {
   },
 
   async verifyGetPost(req, res, next) {
-
-    if (!ObjectId.isValid(req.params.id))
+    if (!ObjectId.isValid(req.params.post_id))
       return next(new PostNotFound());
 
-    const post = await getPostAndPopulate(req.params.id);
+    const post = await getPostAndPopulate(req.params.post_id);
 
     if (!post)
       return next(new PostNotFound());

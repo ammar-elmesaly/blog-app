@@ -1,5 +1,5 @@
 async function deleteReply(commentId, replyId, postId) {
-  const res = await fetch(`/post/${commentId}/replies/delete?reply_id=${replyId}`, {
+  const res = await fetch(`/post/${postId}/comment/${commentId}/reply/${replyId}/delete`, {
     method: "DELETE"
   });
 
@@ -15,7 +15,7 @@ async function deleteComment(postId, commentId) {
 }
 
 async function likeComment(id, button) {
-  const res = await fetch(`https://localhost:3000/like/comment/${id}`, {
+  const res = await fetch(`/like/comment/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json"
