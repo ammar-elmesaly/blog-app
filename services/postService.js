@@ -13,7 +13,10 @@ function getPostAndPopulate(post_id) {
     .populate('author', 'username avatarSrc')
     .populate({
       path: 'comments',
-      populate: { path: 'author', select: 'username avatarSrc' }
+      populate: [
+        { path: 'author', select: 'username avatarSrc' },
+        { path: 'replies.author', select: 'username avatarSrc' }
+      ]
     });
 }
 

@@ -2,7 +2,8 @@
   --button-main-color: #0066ff;
   --button-main-color-hover: #0257d6;
   --button-delete-color:rgb(250, 94, 85);
-  --button-delete-background:#b62324;
+  --button-delete-background:#ed1616;
+  --button-delete-hover: #b62324;
   --error-message-color: rgb(204, 0, 0);
   --error-message-color-hover: rgb(144, 0, 0);
   --error-message-background: rgb(255, 235, 233);
@@ -28,4 +29,8 @@ main {
   border-radius: 5px;
   margin-top: 20px;
   padding: 10px;
+}
+
+.js-hidden {
+  display: none;
 }

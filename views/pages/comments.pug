@@ -6,6 +6,7 @@ block title
 block link_css
   link(href="/public/styles/post.css", rel="stylesheet")
   link(href="/public/styles/comment.css", rel="stylesheet")
+  link(href="/public/styles/reply.css", rel="stylesheet")
 
 block content
   .post.js-post(data-post-id=post._id)
@@ -37,31 +38,69 @@ block content
     else
       .comments
         each comment in post.comments
-          .comment.js-comment(data-comment-id=comment._id)
-            .comment-header-grid
-              img.author-icon(
-                src= comment.author.avatarSrc ? comment.author.avatarSrc : "/public/images/default-avatar.png",
-                alt="Profile"
-              )
-              .author-info
-                .username #{comment.author.username}
-                .date #{comment.dateFormatted}
+          .comment-container.js-comment-container
+            .comment.js-comment(data-comment-id=comment._id)
+              .comment-header-grid
+                img.author-icon(
+                  src= comment.author.avatarSrc ? comment.author.avatarSrc : "/public/images/default-avatar.png",
+                  alt="Profile"
+                )
+                .author-info
+                  .username #{comment.author.username}
+                  .date #{comment.dateFormatted}
 
-            if (comment.isAuthor)
-              .delete-comment
-                button(class="delete-comment-btn js-delete-comment-btn")
-                  img(src="/public/images/trash-icon.png", alt="Delete Comment")
-            
-            p.content #{comment.content}
+              if (comment.isAuthor)
+                .delete-comment
+                  button(class="delete-comment-btn js-delete-comment-btn")
+                    img(src="/public/images/trash-icon.png", alt="Delete Comment")
+              
+              p.content #{comment.content}
 
-            .comment-actions
-              button.like-comment-btn.js-like-comment-btn
-                if (comment.isLiked)
-                  img.like-img.js-like-img(src="/public/images/star-fill.png", alt="like")
-                else
-                  img.like-img.js-like-img(src="/public/images/star.png", alt="like")
+              .comment-actions
+                button.like-comment-btn.js-like-comment-btn
+                  if (comment.isLiked)
+                    img.like-img.js-like-img(src="/public/images/star-fill.png", alt="like")
+                  else
+                    img.like-img.js-like-img(src="/public/images/star.png", alt="like")
+                    
+                  .like-cnt.js-like-cnt #{comment.likesCount || 0}
+
+                  button.reply-btn.js-reply-btn
+                    img.reply-img(src="/public/images/comment-icon.png", alt="reply")
+                    span #{comment.repliesCount || 0}
                   
-                .like-cnt.js-like-cnt #{comment.likesCount || 0}
+            each reply in comment.replies
+              .reply.js-reply(data-reply-id=reply._id)
+                .reply-header-grid
+                  img.author-icon(
+                    src= reply.author.avatarSrc ? reply.author.avatarSrc : "/public/images/default-avatar.png",
+                    alt="Profile"
+                  )
+                  .author-info
+                    .username #{reply.author.username}
+                    .date #{reply.dateFormatted}
+
+                if (reply.isAuthor)
+                  .delete-reply
+                    button(class="delete-reply-btn js-delete-reply-btn")
+                      img(src="/public/images/trash-icon.png", alt="Delete Reply")
+                
+                p.content #{reply.content}
+
+                .reply-actions
+                  button.like-reply-btn.js-like-reply-btn
+                    if (reply.isLiked)
+                      img.like-img.js-like-img(src="/public/images/star-fill.png", alt="like")
+                    else
+                      img.like-img.js-like-img(src="/public/images/star.png", alt="like")
+                      
+                    .like-cnt.js-like-cnt #{reply.likesCount || 0}
+              
+            .reply-card.js-reply-card.js-hidden
+              form.bubble(action=`/post/${comment._id}/replies/new?post_id=${post._id}` method="POST")
+                label.sr-only(for="reply") Reply to comment
+                textarea#reply.reply-input(placeholder="Reply to comment…" name="content")
+                button.send(type="submit") Post
 
 block scripts
   script(src="/public/scripts/comment.js") 

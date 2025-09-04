@@ -6,7 +6,6 @@
 .content {
   font-size: 18px;
   margin-left: 50px;
-  width: 90%;
 }
 
 .post-photo-container {
@@ -69,7 +68,7 @@
   gap: 8px;
 }
 
-.comment-input {
+.comment-input, .reply-input {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 8px 12px;

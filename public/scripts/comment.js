@@ -45,3 +45,10 @@ document.querySelectorAll('.js-delete-comment-btn').forEach(button => {
     if (confirmation) deleteComment(button.closest('.js-post').dataset.postId, button.closest('.js-comment').dataset.commentId);
   });
 });
+
+document.querySelectorAll('.js-reply-btn').forEach(button => {
+  button.addEventListener('click', () => {
+    button.closest('.js-comment-container').querySelector('.js-reply-card')
+      .classList.toggle('js-hidden');
+  })
+});

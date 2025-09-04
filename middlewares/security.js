@@ -235,6 +235,23 @@ const Comments = {
   }
 };
 
+const Replies = {
+  handleValidation(req, res, next) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      console.log(errors.array()[0].msg);
+      return;
+    }
+    next();
+  },
+  handleErrors(err, req, res, next) {
+    if (err instanceof NotLoggedInError)
+      return res.redirect('/login');
+
+    next(err);
+  }
+}
+
 const Generic = {
   mustLogIn(req, res, next) {
     if (req.session && req.session.user) {
@@ -267,5 +284,6 @@ module.exports = {
   EditPost,
   Home,
   Comments,
+  Replies,
   redirectToHome,
 };

@@ -3,6 +3,7 @@ node_modules/
 uploads/
 *.svg
 .vscode/
+error.txt
 
 # Ignore SSL certificates
 

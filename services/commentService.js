@@ -1,4 +1,3 @@
-const comments = require('../models/comments');
 const Comment = require('../models/comments');
 const { addCommentToPost, removeCommentFromPost } = require('../services/postService');
 
