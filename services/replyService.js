@@ -10,7 +10,25 @@ function deleteReply(commentId, replyId, authorId) {
   });
 }
 
+async function likeReply(commentId, replyId, authorId, remove) {
+  if (remove) {
+    return Comment.findOneAndUpdate(
+      { _id: commentId, "replies._id": replyId },
+      { $pull: { "replies.$.likesAuthors": authorId} },
+      { new: true}
+    );
+  }
+
+  return Comment.findOneAndUpdate(
+    { _id: commentId, "replies._id": replyId },
+    { $addToSet: { "replies.$.likesAuthors": authorId } },
+    { new: true }
+  );
+}
+
+
 module.exports = {
   createReply,
-  deleteReply
+  deleteReply,
+  likeReply
 };

@@ -1,6 +1,5 @@
 const { timeAgo } = require('../services/dateService');
 const postService = require('../services/postService');
-const commentService = require('../services/commentService');
 const ObjectId = require('mongoose').Types.ObjectId;
 
 async function getHomePage(req, res, next) {
@@ -37,23 +36,6 @@ async function deletePost (req, res, next) {
   res.sendStatus(200);
 }
 
-async function deleteComment (req, res, next) {
-  if (!ObjectId.isValid(req.params.comment_id) || !ObjectId.isValid(req.query.post_id))
-    return res.sendStatus(400);
-
-  const comment = await commentService.getComment(req.params.comment_id);
-  const post = await postService.getPost(req.query.post_id);
-
-  if (!comment || !post) 
-    return res.sendStatus(404);
-
-  if (!comment.author.equals(req.session.user._id))
-    return res.sendStatus(401);
-
-  await commentService.deleteComment(req.query.post_id, req.params.comment_id);
-  res.sendStatus(200);
-}
-
 async function likePost (req, res, next) {
   if (!ObjectId.isValid(req.params.post_id))
     return res.sendStatus(400);
@@ -85,41 +67,8 @@ async function likePost (req, res, next) {
   });
 }
 
-async function likeComment (req, res, next) {
-  if (!ObjectId.isValid(req.params.comment_id))
-    return res.sendStatus(400);
-
-  const comment = await commentService.getComment(req.params.comment_id);
-
-  if (!comment) 
-    return res.sendStatus(404);
-
-  let isLiked = comment.likesAuthors.includes(req.session.user._id);
-
-  let new_comment;
-
-  if (isLiked) {  // unlike
-    new_comment = await commentService.likeComment(comment._id, req.session.user._id, true);
-    isLiked = false;
-
-  } else {  // like
-    new_comment = await commentService.likeComment(comment._id, req.session.user._id, false);
-    isLiked = true;
-  }
-  
-
-  const likesCount = new_comment.likesAuthors.length;
-
-  res.status(200).json({
-    likesCount,
-    isLiked
-  });
-}
-
 module.exports = {
   getHomePage,
   deletePost,
-  deleteComment,
   likePost,
-  likeComment
 }

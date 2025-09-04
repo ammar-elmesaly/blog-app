@@ -20,7 +20,7 @@ router.delete('/reply/:reply_id/delete',
   deleteReply
 );
 
-router.post('/reply/:reply_id/like', Generic.mustLogIn, likeReply);
+router.put('/reply/:reply_id/like', Generic.mustLogIn, likeReply);
 
 router.use(Replies.handleErrors);
 

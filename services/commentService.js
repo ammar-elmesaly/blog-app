@@ -18,15 +18,13 @@ function likeComment(comment_id, user_id, remove) {
       { $pull: { likesAuthors: user_id } },
       { new: true }
     );
-    
-  } else {
-
-    return Comment.findByIdAndUpdate(
-      comment_id,
-      { $addToSet: { likesAuthors: user_id } },
-      { new: true }
-    );
   }
+  
+  return Comment.findByIdAndUpdate(
+    comment_id,
+    { $addToSet: { likesAuthors: user_id } },
+    { new: true }
+  );
 }
 
 async function deleteComment(post_id, comment_id) {

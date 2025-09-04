@@ -31,29 +31,35 @@ async function deleteReply(req, res) {
 }
 
 async function likeReply(req, res) {
-    if (!ObjectId.isValid(req.params.comment_id))
+    if (!ObjectId.isValid(req.params.comment_id) || !ObjectId.isValid(req.params.reply_id)) {
       return res.sendStatus(400);
+    }
   
     const comment = await commentService.getComment(req.params.comment_id);
-  
     if (!comment) 
       return res.sendStatus(404);
-  
-    let isLiked = comment.likesAuthors.includes(req.session.user._id);
+
+    const reply = comment.replies.id(req.params.reply_id); 
+
+    if (!reply)
+      return res.sendStatus(404);
+
+    let isLiked = reply.likesAuthors.includes(req.session.user._id);
   
     let new_comment;
-  
+
     if (isLiked) {  // unlike
-      new_comment = await commentService.likeComment(comment._id, req.session.user._id, true);
+      new_comment = await replyService.likeReply(comment._id, reply._id, req.session.user._id, true);
       isLiked = false;
   
     } else {  // like
-      new_comment = await commentService.likeComment(comment._id, req.session.user._id, false);
+      new_comment = await replyService.likeReply(comment._id, reply._id, req.session.user._id, false);
       isLiked = true;
     }
     
+    const new_reply = new_comment.replies.id(req.params.reply_id); 
   
-    const likesCount = new_comment.likesAuthors.length;
+    const likesCount = new_reply.likesAuthors.length;
   
     res.status(200).json({
       likesCount,
