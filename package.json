@@ -4,8 +4,9 @@
   "description": "A Basic blog fullstack application",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --watch app.js"
+    "test": "jest",
+    "start": "node app.js",
+    "start:dev": "node --watch app.js"
   },
   "keywords": [
     "Blog",
@@ -13,7 +14,7 @@
     "Node"
   ],
   "author": "Ammar Elmesaly",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "body-parser": "^2.2.0",
@@ -28,5 +29,9 @@
     "mongoose": "^8.17.1",
     "multer": "^2.0.2",
     "pug": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "jest": "^30.1.3"
   }
 }

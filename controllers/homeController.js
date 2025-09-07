@@ -2,16 +2,22 @@ const { timeAgo } = require('../services/dateService');
 const postService = require('../services/postService');
 const ObjectId = require('mongoose').Types.ObjectId;
 
-async function getHomePage(req, res, next) {
-  let posts = await postService.getPosts();
-  posts = posts.map(post => {
+function mapPosts(posts, userId) {
+  posts.map(post => {
     post.dateFormatted = timeAgo(post.date);
-    post.isAuthor = req.session.user._id.toString() === post.author._id.toString();
+    post.isAuthor = userId.toString() === post.author._id.toString();
     post.likesCount = post.likesAuthors.length;
     post.commentsCount = post.comments.length;
-    post.isLiked = post.likesAuthors.includes(req.session.user._id);
+    post.isLiked = post.likesAuthors.includes(userId);
     return post;
   });
+
+  return posts;
+}
+
+async function getHomePage(req, res) {
+  let posts = await postService.getPosts();
+  posts = mapPosts(posts, req.session.user._id);
 
   res.render('pages/home', {
     currentPage: 'home',
@@ -20,7 +26,7 @@ async function getHomePage(req, res, next) {
   });
 }
 
-async function deletePost (req, res, next) {
+async function deletePost (req, res) {
   if (!ObjectId.isValid(req.params.post_id))
     return res.sendStatus(400);
 
@@ -36,7 +42,7 @@ async function deletePost (req, res, next) {
   res.sendStatus(200);
 }
 
-async function likePost (req, res, next) {
+async function likePost (req, res) {
   if (!ObjectId.isValid(req.params.post_id))
     return res.sendStatus(400);
 

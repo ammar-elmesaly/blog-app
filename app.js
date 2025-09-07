@@ -10,7 +10,6 @@ const allRouters = require('./routes');
 const PORT = process.env.PORT || 3000;
 
 const mongoose = require('mongoose');
-const { mustNotLogIn } = require('./middlewares/security.js');
 
 mongoose.connect(process.env.MONGO_URI);
 

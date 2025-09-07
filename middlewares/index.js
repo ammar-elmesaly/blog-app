@@ -38,8 +38,8 @@ function middlewares(app) {
     }),
     cookie: {
       secure: true,
-      maxAge: 31557600000,
-      httpOnly: false
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 60 * 24 * 365 // 1 year
     }
   }));
 }

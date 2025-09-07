@@ -40,15 +40,13 @@ function likePost(post_id, user_id, remove) {
       { $pull: { likesAuthors: user_id } },
       { new: true }
     );
-    
-  } else {
-
-    return Post.findByIdAndUpdate(
-      post_id,
-      { $addToSet: { likesAuthors: user_id } },
-      { new: true }
-    );
   }
+  
+  return Post.findByIdAndUpdate(
+    post_id,
+    { $addToSet: { likesAuthors: user_id } },
+    { new: true }
+  );
 }
 
 function updatePost(post_id, updates) {
