@@ -1,5 +1,5 @@
 async function deletePost(id) {
-  const res = await fetch(`https://localhost:3000/delete/post/${id}`, {
+  const res = await fetch(`/delete/post/${id}`, {
     method: "DELETE"
   });
 
@@ -7,7 +7,7 @@ async function deletePost(id) {
 }
 
 async function likePost(id, button) {
-  const res = await fetch(`https://localhost:3000/like/post/${id}`, {
+  const res = await fetch(`/like/post/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json"
