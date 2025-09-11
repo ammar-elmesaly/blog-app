@@ -12,6 +12,8 @@ const MongoStore = require('connect-mongo');
 function middlewares(app) {
 
   // Pug template
+  require('pug');
+  app.engine('pug', require('pug').__express);
 
   app.set('view engine', 'pug');
   app.set('views', path.join(__dirname, '../views'));
