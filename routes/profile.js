@@ -1,11 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
-const multer = require('multer');
-const upload = multer({dest: './uploads/avatars'});
 const { Generic, Profile } = require('../middlewares/security');
 const { body } = require('express-validator');
 const { getProfilePage, updateUserInfo, changePassword, deleteUser, uploadAvatar } = require('../controllers/profileController');
+
+const multer = require('multer');
+let upload;
+if (process.env.NODE_ENV === "PROD") {
+  upload = multer({dest: '/tmp'});
+} else {
+  upload = multer({dest: './uploads/posts'});
+}
 
 router.get('/', Generic.mustLogIn, getProfilePage);
 

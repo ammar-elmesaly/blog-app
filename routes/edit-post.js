@@ -4,7 +4,13 @@ const { Generic, EditPost } = require('../middlewares/security');
 const { getEditPage, postEditUpdate } = require('../controllers/editController');
 const { body } = require('express-validator');
 const multer = require('multer');
-const upload = multer({dest: './uploads/posts'});
+let upload;
+
+if (process.env.NODE_ENV === "PROD") {
+  upload = multer({dest: '/tmp'});
+} else {
+  upload = multer({dest: './uploads/posts'});
+}
 
 router.get('/:post_id', Generic.mustLogIn, EditPost.verifyGetPost, getEditPage);
 

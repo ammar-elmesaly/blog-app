@@ -2,12 +2,18 @@ const express = require('express');
 const router = express.Router();
 const { Write, Generic } = require('../middlewares/security');
 const { body } = require('express-validator');
-const multer = require('multer');
-const upload = multer({dest: './uploads/posts'});
 const {
   getWritePage,
   createPost
 } = require('../controllers/writeController');
+
+const multer = require('multer');
+let upload;
+if (process.env.NODE_ENV === "PROD") {
+  upload = multer({dest: '/tmp'});
+} else {
+  upload = multer({dest: './uploads/posts'});
+}
 
 router.get('/new', Generic.mustLogIn, getWritePage);
 
