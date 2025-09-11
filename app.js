@@ -33,21 +33,18 @@ app.use((err, req, res, next) => {  // Server Global Error handler
   res.render('pages/error.pug', {error: err});
 });
 
-/*
-http listener
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
-*/
 
 
 // Set https
 
-const httpsOptions = {
-  key: fs.readFileSync('./certs/server.key'),
-  cert: fs.readFileSync('./certs/server.cert')
-};
+// const httpsOptions = {
+//   key: fs.readFileSync('./certs/server.key'),
+//   cert: fs.readFileSync('./certs/server.cert')
+// };
 
-https.createServer(httpsOptions, app).listen(PORT, () => {
-  console.log(`HTTPS Server running on port ${PORT}`);
-});
+// https.createServer(httpsOptions, app).listen(PORT, () => {
+//   console.log(`HTTPS Server running on port ${PORT}`);
+// });
